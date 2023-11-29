@@ -8,6 +8,7 @@
 
 #include "common.h"
 #include "header.h"
+#include "play.h"
 #include "score.h"
 
 void menu_utama() {
@@ -54,7 +55,7 @@ void menu_utama() {
         } else if ((key == 13)) {
             switch (current_selection) {
                 case 1:
-                    menu_kredit();
+                    permainan();
                     break;
                 case 2:
                     menu_riwayat_skor();

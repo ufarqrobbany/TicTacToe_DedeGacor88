@@ -57,20 +57,50 @@ void input_nama(int mode) {
     printf("Tekan ESC untuk kembali...");
 
     // print isi body
+    gotoxy(4, 12);
+    printf("Player 1: ");
     n = 0;
     do {
-        gotoxy(4, 12);
-        printf("Player 1: ");
-
         // navigasi menu
         key = getch();
+        // jika menekan tombol ESC atau Enter
         if (key == 13 || key == 27) {
             break;
-        } else {
-            gotoxy(4 + n + 1, i + 12);
-            pemain_1.nama[n] = key;
+        } else if (key == 8) {  // jika menekan tombol backspace
+            // jika n lebih dari 0 / ada karakter
+            if (n > 0) {
+                // Pindahkan kursor ke belakang, hapus karakter, dan kurangi n
+                printf("\b \b");
+                n--;
+            }
+        } else if ((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || (key >= '0' && key <= '9') || (key == ' ')) {
+            pemain_1.nama[n++] = key;
             printf("%c", key);
-            n++;
+            gotoxy(14 + n, 12);
         }
-    } while (key != 13 || key != 27);
+    } while (key != 13 || key != 27);  // Selama tidak menekan tombol ESC atau Enter
+
+    if (key == 27) {
+        pilih_mode();
+    }
+    gotoxy(4, 15);
 }
+
+// n = 0;
+// do {
+//     // navigasi menu
+//     key = getch();
+//     if (key == 13 || key == 27) {
+//         break;
+//     } else if (key == 8) {  // Check for backspace (ASCII code 8)
+//         if (n > 0) {
+//             // Move the cursor back, erase the character, and decrement n
+//             printf("\b \b");
+//             n--;
+//         }
+//     } else {
+//         pemain_1.nama[n++] = key;
+//         printf("%c", key);
+//         gotoxy(14 + n, 12);
+//     }
+// } while (key != 13 && key != 27);

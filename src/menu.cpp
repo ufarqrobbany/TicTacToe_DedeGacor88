@@ -2,6 +2,7 @@
 
 #include <conio.h>
 #include <math.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
@@ -11,19 +12,15 @@
 #include "play.h"
 #include "score.h"
 
-void menu_utama() {
-    system("cls||clear");
-
+void menu_opsi(char nama_menu[20], int jml_opsi, char opsi[10][20], int *select, bool can_back) {
     int i, baris;
     int lebar = 94;
-    int tinggi = 7;
-    char opsi[5][20] = {"Mulai Permainan", "Riwayat Skor", "Bantuan", "Kredit", "Keluar"};
+    int tinggi = jml_opsi + 2;
     char key;
     int current_selection = 1;
 
     // print header
-    char str[] = "MENU UTAMA";
-    header(str);
+    header(nama_menu);
 
     // print body menu utama
     for (i = 11; i < 11 + tinggi; i++) {
@@ -39,38 +36,53 @@ void menu_utama() {
 
     // print isi body
     do {
-        for (i = 0; i < 5; i++) {
+        for (i = 0; i < jml_opsi; i++) {
             gotoxy(4, i + 12);
             printf("%c %s", (current_selection == i + 1) ? 254 : ' ', opsi[i]);
         }
 
         gotoxy(1, i + 14);
+        if (can_back) printf("Tekan ESC untuk kembali...");
 
         // navigasi menu
         key = getch();
         if ((key == 72) && (current_selection > 1)) {
             current_selection -= 1;
-        } else if ((key == 80) && (current_selection < 5)) {
+        } else if ((key == 80) && (current_selection < jml_opsi)) {
             current_selection += 1;
-        } else if ((key == 13)) {
-            switch (current_selection) {
-                case 1:
-                    permainan();
-                    break;
-                case 2:
-                    menu_riwayat_skor();
-                    break;
-                case 3:
-                    menu_bantuan();
-                    break;
-                case 4:
-                    menu_kredit();
-                    break;
-                case 5:
-                    break;
-            }
+        } else if (key == 13) {
+            *select = current_selection;
+            break;
+        } else if (key == 27 && can_back) {
+            break;
         }
-    } while (key != 13);
+    } while (key != 13 || key != 27);
+}
+
+void menu_utama() {
+    system("cls||clear");
+
+    int jml_opsi = 5;
+    char menu[20] = "MENU UTAMA";
+    char opsi[jml_opsi][20] = {"Mulai Permainan", "Riwayat Skor", "Bantuan", "Kredit", "Keluar"};
+    int select = 0;
+    menu_opsi(menu, jml_opsi, opsi, &select, false);
+    switch (select) {
+        case 1:
+            pilih_mode();
+            break;
+        case 2:
+            menu_riwayat_skor();
+            break;
+        case 3:
+            menu_bantuan();
+            break;
+        case 4:
+            menu_kredit();
+            break;
+        case 5:
+            break;
+    }
 }
 
 void menu_bantuan() {

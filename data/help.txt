@@ -1,34 +1,58 @@
 How To Play:
-1. Anda dapat memilih tingkat kesulitan berdasarkan ukuran papan, tersedia 3x3, 5x5, 7x7.
-2. Anda diarahkan untuk memilih lawan bermain, ada pilihan Player vs Player, dan Player vs Computer.
+1. Anda dapat memilih tingkat kesulitan berdasarkan ukuran papan, 
+   tersedia 3x3, 5x5, 7x7.
+2. Anda diarahkan untuk memilih lawan bermain, 
+   ada pilihan Player vs Player, dan Player vs Computer.
 
-	Jika memilih Player vs Computer, anda harus mengisi nama dan memilih tingkat kesulitan, dan memilih ukuran papan.
+	Jika memilih Player vs Computer, 
+	anda harus mengisi nama dan memilih tingkat kesulitan, 
+	dan memilih ukuran papan.
 
-	Jika memilih Player vs Player, kedua Player diharuskan memilih nama, dan ukuran papan sebagai tingkat kesulitan bermain.
+	Jika memilih Player vs Player, 
+	kedua Player diharuskan memilih nama, 
+	dan ukuran papan sebagai tingkat kesulitan bermain.
 
-3. Setelah berhasil masuk kedalam permainan, anda dapat memilih kolom sel yang ditandai dengan nomer.
+3. Setelah berhasil masuk kedalam permainan, 
+   anda dapat memilih kolom sel yang ditandai dengan nomer.
 
-	Jika memilih ukuran papan 3x3, anda dapat mengisi angka 1-9 untuk membentuk pola simbol agar bisa meraih kemenangan.
+	Jika memilih ukuran papan 3x3, 
+	anda dapat mengisi angka 1-9, 
+	untuk membentuk pola simbol agar bisa meraih kemenangan.
 
-	Jika memilih ukuran papan 5x5, anda dapat mengisi angka 1-25 untuk membentuk pola simbol agar bisa meraih kemenangan.
+	Jika memilih ukuran papan 5x5, 
+	anda dapat mengisi angka 1-25, 
+	untuk membentuk pola simbol agar bisa meraih kemenangan.
 
-	Jika memilih ukuran papan 7x7, anda dapat mengisi angka 1-49 untuk membentuk pola simbol agar bisa meraih kemenangan.
+	Jika memilih ukuran papan 7x7, 
+	anda dapat mengisi angka 1-49, 
+	untuk membentuk pola simbol agar bisa meraih kemenangan.
 
 4. Jika anda berhasil memenangkan permainan, anda dapat meraih poin.
 
-	Jika memilih opsi Player vs Computer, anda meraih poin 1, dan dapat dilihat pada menu Riwayat Skor, dengan tampilan nama player dan total skor yang pernah diraih.
+	Jika memilih opsi Player vs Computer, anda meraih poin 1, 
+	dan dapat dilihat pada menu Riwayat Skor, 
+	dengan tampilan nama player dan total skor yang pernah diraih.
 
-	Jika memilih opsi Player vs Player, player yang meraih kemenangan, namanya akan tercatat pada menu Riwayat skor, dengan tampilan nama player yang menang dan total skor yang pernah diraih.
+	Jika memilih opsi Player vs Player, player yang meraih kemenangan, 
+	namanya akan tercatat pada menu Riwayat skor, 
+	dengan tampilan nama player yang menang dan total skor yang pernah diraih.
 
-		Jika player melanjutkan bermain pada opsi Player vs Player, riwayat skor pada permainan sebelumnya tidak terhapus, dan akan bertambah jika berhasil memenangkan permainan kembali.
+		Jika player melanjutkan bermain pada opsi Player vs Player, 
+		riwayat skor pada permainan sebelumnya tidak terhapus, 
+		dan akan bertambah jika berhasil memenangkan permainan kembali.
 
-		Jika player memilih untuk keluar dari permainan, riwayat skor pada permainan sebelumnya akan tersimpan ke dalam menu Riwayat Skor,
+		Jika player memilih untuk keluar dari permainan, 
+		riwayat skor pada permainan sebelumnya, 
+		akan tersimpan ke dalam menu Riwayat Skor,
 		dan jika memilih permainan baru, kondisi skor kedua player akan 0.
 
-5. Jika anda kalah dalam permainan, anda dapat mengulang kembali, atau keluar dari permainan.
+5. Jika anda kalah dalam permainan, 
+   anda dapat mengulang kembali, 
+   atau keluar dari permainan.
 
-6. Menu Riwayat Skor difungsikan sebagai rekaman jejak pemain jika pernah berhasil mencetak poin.
+6. Menu Riwayat Skor difungsikan sebagai rekaman jejak pemain, 
+   jika pernah berhasil mencetak poin.
 
 7. Menu Kredit akan menampilkan pengembang permainan.
 
-8. Menu Keluar digunakan untuk menghentikan proses permainan.
+8. Menu Keluar digunakan untuk menghentikan proses permainan.

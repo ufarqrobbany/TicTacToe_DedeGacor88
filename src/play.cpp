@@ -32,7 +32,7 @@ void pilih_mode() {
 
 void input_nama(int mode) {
     system("cls||clear");
-    int i, n, baris;
+    int i, n, p, baris;
     int lebar = 94;
     int tinggi = mode + 2;
     char key;
@@ -53,19 +53,32 @@ void input_nama(int mode) {
     for (i = 0; i < lebar; i++) printf("%c", 205);
     printf("%c\n", 188);
 
-    gotoxy(1, tinggi + 14);
+    gotoxy(1, mode + 14);
     printf("Tekan ESC untuk kembali...");
 
     // print isi body
     gotoxy(4, 12);
-    printf("Player 1: ");
+    printf("Player 1: \n");
+    if (mode == 2) {
+        gotoxy(4, 13);
+        printf("Player 2: \n");
+    }
+
+    p = 1;
     n = 0;
+    gotoxy(14, 12);
     do {
         // navigasi menu
         key = getch();
         // jika menekan tombol ESC atau Enter
-        if (key == 13 || key == 27) {
-            break;
+        if ((key == 13) && (n > 0)) {
+            if ((mode == 2) && (p == 1)) {
+                p = 2;
+                n = 0;
+                gotoxy(14 + n, 11 + p);
+            } else {
+                break;
+            }
         } else if (key == 8) {  // jika menekan tombol backspace
             // jika n lebih dari 0 / ada karakter
             if (n > 0) {
@@ -73,34 +86,20 @@ void input_nama(int mode) {
                 printf("\b \b");
                 n--;
             }
-        } else if ((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || (key >= '0' && key <= '9') || (key == ' ')) {
-            pemain_1.nama[n++] = key;
+        } else if (((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || (key >= '0' && key <= '9') || (key == ' ')) && (n < 10)) {
+            if (p == 1) {
+                pemain_1.nama[n++] = key;
+            } else {
+                pemain_2.nama[n++] = key;
+            }
             printf("%c", key);
-            gotoxy(14 + n, 12);
+            gotoxy(14 + n, 11 + p);
+        } else if (key == 27) {
+            break;
         }
-    } while (key != 13 || key != 27);  // Selama tidak menekan tombol ESC atau Enter
+    } while (key != 27);  // Selama tidak menekan tombol ESC atau Enter
 
     if (key == 27) {
         pilih_mode();
     }
-    gotoxy(4, 15);
 }
-
-// n = 0;
-// do {
-//     // navigasi menu
-//     key = getch();
-//     if (key == 13 || key == 27) {
-//         break;
-//     } else if (key == 8) {  // Check for backspace (ASCII code 8)
-//         if (n > 0) {
-//             // Move the cursor back, erase the character, and decrement n
-//             printf("\b \b");
-//             n--;
-//         }
-//     } else {
-//         pemain_1.nama[n++] = key;
-//         printf("%c", key);
-//         gotoxy(14 + n, 12);
-//     }
-// } while (key != 13 && key != 27);

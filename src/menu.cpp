@@ -56,7 +56,7 @@ void menu_opsi(char nama_menu[20], int jml_opsi, char opsi[10][20], int *select,
         } else if (key == 27 && can_back) {
             break;
         }
-    } while (key != 13 || key != 27);
+    } while (key != 13 || (key != 27 && can_back == false));
 }
 
 void menu_utama() {
@@ -69,7 +69,7 @@ void menu_utama() {
     menu_opsi(menu, jml_opsi, opsi, &select, false);
     switch (select) {
         case 1:
-            pilih_mode();
+            permainan();
             break;
         case 2:
             menu_riwayat_skor();

@@ -8,15 +8,14 @@
 #include "header.h"
 #include "menu.h"
 
-void input_nama(int mode);
-
-typedef struct {
-    char nama[10];
-} Player;
-
 Player pemain_1, pemain_2;
+int mode, level, ukuran;
 
-void pilih_mode() {
+void permainan() {
+    pilih_mode(&mode);
+}
+
+void pilih_mode(int *mode) {
     system("cls||clear");
     int jml_opsi = 2;
     char menu[20] = "PILIH MODE BERMAIN";
@@ -24,13 +23,14 @@ void pilih_mode() {
     int select = 0;
     menu_opsi(menu, jml_opsi, opsi, &select, true);
     if (select != 0) {
-        input_nama(select);
+        *mode = select;
+        input_nama(*mode, &pemain_1, &pemain_2);
     } else {
         menu_utama();
     }
 }
 
-void input_nama(int mode) {
+void input_nama(int mode, Player *pemain_1, Player *pemain_2) {
     system("cls||clear");
     int i, n, p, baris;
     int lebar = 94;
@@ -70,8 +70,16 @@ void input_nama(int mode) {
     do {
         // navigasi menu
         key = getch();
-        // jika menekan tombol ESC atau Enter
-        if ((key == 13) && (n > 0)) {
+
+        if (((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || (key >= '0' && key <= '9') || (key == ' ')) && (n < 10)) {
+            if (p == 1) {
+                (*pemain_1).nama[n++] = key;
+            } else {
+                (*pemain_2).nama[n++] = key;
+            }
+            printf("%c", key);
+            gotoxy(14 + n, 11 + p);
+        } else if ((key == 13) && (n > 0)) {  // jika menekan tombol Enter dan n lebih dari 0 / ada karakter
             if ((mode == 2) && (p == 1)) {
                 p = 2;
                 n = 0;
@@ -86,20 +94,51 @@ void input_nama(int mode) {
                 printf("\b \b");
                 n--;
             }
-        } else if (((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || (key >= '0' && key <= '9') || (key == ' ')) && (n < 10)) {
-            if (p == 1) {
-                pemain_1.nama[n++] = key;
-            } else {
-                pemain_2.nama[n++] = key;
-            }
-            printf("%c", key);
-            gotoxy(14 + n, 11 + p);
-        } else if (key == 27) {
-            break;
         }
-    } while (key != 27);  // Selama tidak menekan tombol ESC atau Enter
+    } while (key != 27);  // Selama tidak menekan tombol ESC
 
-    if (key == 27) {
-        pilih_mode();
+    if (key == 13) {
+        if (mode == 1) {
+            pilih_level(&level);
+        } else {
+            pilih_ukuran(&ukuran);
+        }
+    } else if (key == 27) {
+        pilih_mode(&mode);
+    }
+}
+
+void pilih_level(int *level) {
+    system("cls||clear");
+    int jml_opsi = 3;
+    char menu[30] = "PILIH TINGKAT KESULITAN";
+    char opsi[jml_opsi][20] = {"Easy", "Medium", "Hard"};
+    int select = 0;
+    menu_opsi(menu, jml_opsi, opsi, &select, true);
+    if (select != 0) {
+        *level = select;
+        pilih_ukuran(&ukuran);
+    } else {
+        input_nama(mode, &pemain_1, &pemain_2);
+    }
+}
+
+void pilih_ukuran(int *ukuran) {
+    system("cls||clear");
+    int jml_opsi = 3;
+    char menu[20] = "PILIH UKURAN PAPAN";
+    char opsi[jml_opsi][20] = {"3 x 3", "5 x 5", "7 x 7"};
+    int select = 0;
+    menu_opsi(menu, jml_opsi, opsi, &select, true);
+    if (select != 0) {
+        *ukuran = select;
+        // pilih_simbol(&pemain_1, &pemain_2);
+        menu_utama();
+    } else {
+        if (mode == 1) {
+            pilih_level(&level);
+        } else {
+            input_nama(mode, &pemain_1, &pemain_2);
+        }
     }
 }

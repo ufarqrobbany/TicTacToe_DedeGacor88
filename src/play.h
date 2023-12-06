@@ -1,6 +1,7 @@
 typedef struct Player {
     char nama[10];
     char simbol;
+    int giliran;
 } Player;
 
 void permainan();
@@ -9,4 +10,4 @@ struct Player *input_nama(int mode);
 int pilih_level();
 int pilih_ukuran();
 int pilih_simbol();
-void menu_permainan();
+void menu_permainan(Player pemain[2], int ukuran);

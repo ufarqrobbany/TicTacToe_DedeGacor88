@@ -1,0 +1,1 @@
+void init_papan(int ukuran, int (*papan)[7][7]);

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <windows.h>
 
+#include "board.h"
 #include "common.h"
 #include "header.h"
 #include "menu.h"
@@ -59,7 +60,6 @@ void permainan() {
                             } else if (simbol == 2) {
                                 pemain[0].simbol = 'O';
                                 pemain[1].simbol = 'X';
-                                mulai = 1;
                             } else {
                                 ukuran = 0;
                             }
@@ -71,9 +71,36 @@ void permainan() {
         }
     }
 
-    // init_papan();
+    init_papan(ukuran, &papan);
 
-    menu_utama();
+    system("cls||clear");
+    menu_permainan();
+    // display_papan(ukuran, papan);
+
+    // menu_utama();
+}
+
+void menu_permainan() {
+    int i;
+    int lebar = 94;
+    int tinggi = 30;
+
+    char ket[30] = "Game On, Good Luck!";
+
+    // print header
+    header(ket);
+
+    // print body menu utama
+    for (i = 11; i < 11 + tinggi; i++) {
+        gotoxy(1, i);
+        printf("%c", 186);
+        gotoxy(lebar + 2, i);
+        printf("%c\n", 186);
+    }
+
+    printf("%c", 200);
+    for (i = 0; i < lebar; i++) printf("%c", 205);
+    printf("%c\n", 188);
 }
 
 int pilih_mode() {

@@ -8,67 +8,14 @@
 #include "header.h"
 #include "menu.h"
 
+Player pemain_1, pemain_2;
+int mode, level, ukuran;
+
 void permainan() {
-    Player *pemain = (Player *)malloc(sizeof(Player) * 2);
-    int mode, level, ukuran, nama, simbol, mulai;
-
-    // inisialisasi pengaturan game
-    mulai = 0;
-    mode = 0;
-    while (mode >= 0) {
-        mode = pilih_mode();
-        if (mode == -1) break;
-
-        nama = 0;
-        while (nama == 0) {
-            pemain = input_nama(mode);
-            if (strcmp(pemain[0].nama, "") == 0 && strcmp(pemain[1].nama, "") == 0) {
-                nama = -1;
-                break;
-            } else {
-                level = 0;
-                while (level >= 0) {
-                    if (mode == 1) {
-                        level = pilih_level();
-                        if (level == -1) break;
-                    }
-
-                    ukuran = 0;
-                    while (ukuran >= 0) {
-                        ukuran = pilih_ukuran();
-                        if (ukuran == -1) break;
-
-                        simbol = 0;
-                        while (simbol >= 0) {
-                            simbol = pilih_simbol();
-                            if (simbol == 1) {
-                                pemain[0].simbol = 'X';
-                                pemain[1].simbol = 'O';
-                                mulai = 1;
-                                break;
-                            } else if (simbol == 2) {
-                                pemain[0].simbol = 'O';
-                                pemain[1].simbol = 'X';
-                                mulai = 1;
-                                break;
-                            } else {
-                                break;
-                            }
-                        }
-                        if (mulai == 1) break;
-                    }
-                    if (mulai == 1) break;
-                }
-            }
-            if (mulai == 1) break;
-        }
-        if (mulai == 1) break;
-    }
-
-    menu_utama();
+    pilih_mode(&mode);
 }
 
-int pilih_mode() {
+void pilih_mode(int *mode) {
     system("cls||clear");
     int jml_opsi = 2;
     char menu[20] = "PILIH MODE BERMAIN";
@@ -76,16 +23,15 @@ int pilih_mode() {
     int select = 0;
     menu_opsi(menu, jml_opsi, opsi, &select, true);
     if (select != 0) {
-        return select;
+        *mode = select;
+        input_nama(*mode, &pemain_1, &pemain_2);
     } else {
-        return -1;
+        menu_utama();
     }
 }
 
-struct Player *input_nama(int mode) {
+void input_nama(int mode, Player *pemain_1, Player *pemain_2) {
     system("cls||clear");
-    Player *npemain = (Player *)malloc(sizeof(Player) * 2);
-    Player *pemain = (Player *)malloc(sizeof(Player) * 2);
     int i, n, p, baris;
     int lebar = 94;
     int tinggi = mode + 2;
@@ -127,9 +73,9 @@ struct Player *input_nama(int mode) {
 
         if (((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || (key >= '0' && key <= '9') || (key == ' ')) && (n < 10)) {
             if (p == 1) {
-                npemain[0].nama[n++] = key;
+                (*pemain_1).nama[n++] = key;
             } else {
-                npemain[1].nama[n++] = key;
+                (*pemain_2).nama[n++] = key;
             }
             printf("%c", key);
             gotoxy(14 + n, 11 + p);
@@ -152,24 +98,17 @@ struct Player *input_nama(int mode) {
     } while (key != 27);  // Selama tidak menekan tombol ESC
 
     if (key == 13) {
-        pemain[0] = npemain[0];
         if (mode == 1) {
-            char name2[10] = "Computer";
-            strcpy(pemain[1].nama, name2);
+            pilih_level(&level);
         } else {
-            pemain[1] = npemain[1];
+            pilih_ukuran(&ukuran);
         }
-        free(npemain);
-        return pemain;
     } else if (key == 27) {
-        free(npemain);
-        strcpy(pemain[0].nama, "");
-        strcpy(pemain[1].nama, "");
-        return pemain;
+        pilih_mode(&mode);
     }
 }
 
-int pilih_level() {
+void pilih_level(int *level) {
     system("cls||clear");
     int jml_opsi = 3;
     char menu[30] = "PILIH TINGKAT KESULITAN";
@@ -177,13 +116,14 @@ int pilih_level() {
     int select = 0;
     menu_opsi(menu, jml_opsi, opsi, &select, true);
     if (select != 0) {
-        return select;
+        *level = select;
+        pilih_ukuran(&ukuran);
     } else {
-        return -1;
+        input_nama(mode, &pemain_1, &pemain_2);
     }
 }
 
-int pilih_ukuran() {
+void pilih_ukuran(int *ukuran) {
     system("cls||clear");
     int jml_opsi = 3;
     char menu[20] = "PILIH UKURAN PAPAN";
@@ -191,22 +131,36 @@ int pilih_ukuran() {
     int select = 0;
     menu_opsi(menu, jml_opsi, opsi, &select, true);
     if (select != 0) {
-        return ((select * 2) + 1);
+        *ukuran = (select * 2) + 1;
+        pilih_simbol(&pemain_1, &pemain_2);
     } else {
-        return -1;
+        if (mode == 1) {
+            pilih_level(&level);
+        } else {
+            input_nama(mode, &pemain_1, &pemain_2);
+        }
     }
 }
 
-int pilih_simbol() {
+void pilih_simbol(Player *pemain_1, Player *pemain_2) {
     system("cls||clear");
     int jml_opsi = 2;
-    char menu[30] = "PILIH SIMBOL PEMAIN 1";
+    char menu[20] = "PILIH SIMBOL PEMAIN 1";
     char opsi[jml_opsi][20] = {"X", "O"};
     int select = 0;
     menu_opsi(menu, jml_opsi, opsi, &select, true);
-    if (select != 0) {
-        return select;
-    } else {
-        return -1;
+    switch (select) {
+        case 1:
+            *pemain_1.simbol = 'X';
+            *pemain_2.simbol = 'O';
+            menu_utama();
+            break;
+        case 2:
+            *pemain_1.simbol = 'O';
+            *pemain_2.simbol = 'X';
+            menu_utama();
+            break;
+        default:
+            pilih_ukuran(&ukuran);
     }
 }

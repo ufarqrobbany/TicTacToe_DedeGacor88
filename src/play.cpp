@@ -11,11 +11,12 @@
 void permainan() {
     Player *pemain = (Player *)malloc(sizeof(Player) * 2);
     int mode, level, ukuran, nama, simbol, mulai;
+    int papan[7][7];
 
     // inisialisasi pengaturan game
     mulai = 0;
     mode = 0;
-    while (mode >= 0) {
+    while (mode == 0) {
         mode = pilih_mode();
         if (mode == -1) break;
 
@@ -24,46 +25,53 @@ void permainan() {
             pemain = input_nama(mode);
             if (strcmp(pemain[0].nama, "") == 0 && strcmp(pemain[1].nama, "") == 0) {
                 nama = -1;
+                mode = 0;
                 break;
             } else {
+                nama = 1;
                 level = 0;
-                while (level >= 0) {
+                while (level == 0) {
                     if (mode == 1) {
                         level = pilih_level();
-                        if (level == -1) break;
+                        if (level == -1) {
+                            nama = 0;
+                            break;
+                        }
+                    } else {
+                        level = 4;
                     }
 
                     ukuran = 0;
-                    while (ukuran >= 0) {
+                    while (ukuran == 0) {
                         ukuran = pilih_ukuran();
-                        if (ukuran == -1) break;
+                        if (ukuran == -1) {
+                            if (mode == 1) level = 0;
+                            if (mode == 2) nama = 0;
+                            break;
+                        }
 
                         simbol = 0;
-                        while (simbol >= 0) {
+                        while (simbol == 0) {
                             simbol = pilih_simbol();
                             if (simbol == 1) {
                                 pemain[0].simbol = 'X';
                                 pemain[1].simbol = 'O';
-                                mulai = 1;
-                                break;
                             } else if (simbol == 2) {
                                 pemain[0].simbol = 'O';
                                 pemain[1].simbol = 'X';
                                 mulai = 1;
-                                break;
                             } else {
-                                break;
+                                ukuran = 0;
                             }
+                            break;
                         }
-                        if (mulai == 1) break;
                     }
-                    if (mulai == 1) break;
                 }
             }
-            if (mulai == 1) break;
         }
-        if (mulai == 1) break;
     }
+
+    // init_papan();
 
     menu_utama();
 }

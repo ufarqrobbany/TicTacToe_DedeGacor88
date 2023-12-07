@@ -85,6 +85,7 @@ void permainan() {
     time_t saat_ini = time(0);
     struct tm *waktu = localtime(&saat_ini);
     int countdown = saat_ini;
+    int sisa_waktu;
 
     int giliran_saat_ini = 1;
 
@@ -102,7 +103,8 @@ void permainan() {
             }
             saat_ini = time(0);
             gotoxy(74, 12);
-            printf("Sisa Waktu: %-2d Detik", 10 - (saat_ini - countdown));
+            sisa_waktu = 10 - (saat_ini - countdown);
+            printf("Sisa Waktu: %-2d Detik", (sisa_waktu >= 0) ? sisa_waktu : 0);
             display_papan(ukuran, papan, current_selection);
 
             if ((giliran_saat_ini == pemain[0].giliran) || ((giliran_saat_ini == pemain[1].giliran) && (mode == 2))) {
@@ -110,8 +112,9 @@ void permainan() {
                     key = getch();
 
                     saat_ini = time(0);
+                    sisa_waktu = 10 - (saat_ini - countdown);
                     gotoxy(74, 12);
-                    printf("Sisa Waktu: %-2d Detik", 10 - (saat_ini - countdown));
+                    printf("Sisa Waktu: %-2d Detik", (sisa_waktu >= 0) ? sisa_waktu : 0);
 
                     if (key == 72 && current_selection > ukuran) {
                         // Up arrow
@@ -138,8 +141,9 @@ void permainan() {
                     if (saat_ini - countdown < 10) {
                         put_simbol(current_selection, giliran_saat_ini, ukuran, &papan);
                     } else {
-                        gotoxy(4, 13 + (ukuran * 4));
-                        printf("Kamu meletakkan simbol selama %d detik.               ", (saat_ini - countdown));
+                        gotoxy(4, 13 + (ukuran * 4) + 3);
+                        printf("Waktumu sudah habis! sekarang giliran lawan.                                   ");
+                        getch();
                     }
 
                     // alih giliran

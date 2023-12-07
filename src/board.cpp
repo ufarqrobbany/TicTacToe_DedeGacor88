@@ -72,13 +72,22 @@ void display_papan(int ukuran, int papan[7][7], int selection) {
         for (j = 0; j < ukuran; j++) {
             if (selection == nomor) printf("\033[48;5;33m");
             if (papan[i][j] == 0) {
-                printf("       %c", 186);
+                printf("       ");
             } else if (papan[i][j] == 1) {
-                printf("   \033[0;31m%c\033[0m   %c", 'X', 186);
+                if (selection == nomor) {
+                    printf("   %c   ", 'X');
+                } else {
+                    printf("   \033[0;31m%c\033[0m   ", 'X');
+                }
             } else {
-                printf("   \033[0;32m%c\033[0m   %c", 'O', 186);
+                if (selection == nomor) {
+                    printf("   %c   ", 'O');
+                } else {
+                    printf("   \033[0;32m%c\033[0m   ", 'O');
+                }
             }
             if (selection == nomor) printf("\033[0m");
+            printf("%c", 186);
             nomor++;
         }
 

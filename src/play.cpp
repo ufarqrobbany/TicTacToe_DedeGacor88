@@ -13,13 +13,12 @@
 
 void permainan() {
     Player *pemain = (Player *)malloc(sizeof(Player) * 2);
-    int mode, level, ukuran, nama, simbol, mulai, letak, menang;
+    int mode, level, ukuran, nama, simbol, letak, menang;
     int papan[7][7];
     char key;
     int current_selection = 1;
 
     // inisialisasi pengaturan game
-    mulai = 0;
     mode = 0;
     while (mode == 0) {
         mode = pilih_mode();
@@ -81,7 +80,6 @@ void permainan() {
 
     init_papan(ukuran, &papan);
 
-    // https://www.daniweb.com/programming/software-development/threads/91097/countdown-timer
     time_t saat_ini = time(0);
     struct tm *waktu = localtime(&saat_ini);
     int countdown = saat_ini;
@@ -89,18 +87,37 @@ void permainan() {
 
     int giliran_saat_ini = 1;
 
+    char skorP1[3], skorP2[3], skor[10];
+    pemain[0].skor = 0;
+    pemain[1].skor = 20;
+
     menang = 0;
     while (menang == 0 && key != 27) {
         system("cls||clear");
         menu_permainan(pemain, ukuran);
 
         do {
+            // print giliran
             gotoxy(4, 12);
             if (giliran_saat_ini == pemain[0].giliran) {
                 printf("Giliran: %s (%c)         ", pemain[0].nama, pemain[0].simbol);
             } else {
                 printf("Giliran: %s (%c)         ", pemain[1].nama, pemain[1].simbol);
             }
+
+            // print skor
+            // ubah skor menjadi string
+            sprintf(skorP1, "%d", pemain[0].skor);
+            sprintf(skorP2, "%d", pemain[1].skor);
+            // gabungkan
+            strcpy(skor, skorP1);
+            strcat(skor, " - ");
+            strcat(skor, skorP2);
+
+            gotoxy(48 - (int)(strlen(skor) / 2) + 1, 12);
+            printf("%s", skor);
+
+            // print sisa waktu
             saat_ini = time(0);
             gotoxy(74, 12);
             sisa_waktu = 10 - (saat_ini - countdown);
@@ -140,11 +157,15 @@ void permainan() {
                 if (key == 13) {
                     if (saat_ini - countdown < 10) {
                         put_simbol(current_selection, giliran_saat_ini, ukuran, &papan);
+                        menang = cek_papan(ukuran, papan);
                     } else {
                         gotoxy(4, 13 + (ukuran * 4) + 3);
                         printf("Waktumu sudah habis! sekarang giliran lawan.                                   ");
                         getch();
                     }
+
+                    saat_ini = time(0);
+                    countdown = saat_ini;
 
                     // alih giliran
                     if (giliran_saat_ini == 1) {
@@ -152,14 +173,31 @@ void permainan() {
                     } else {
                         giliran_saat_ini = 1;
                     }
-
-                    saat_ini = time(0);
-                    countdown = saat_ini;
                 }
-            }
-        } while (key != 27);
+            } else {
+                // bot komputer
 
-        menang = 1;
+                break;
+            }
+
+        } while (key != 27 && menang == 0);
+
+        int pemainMenang, pemainKalah;
+        if (menang != 0) {
+            if (pemain[0].giliran == menang) {
+                pemainMenang = 1;
+                pemainKalah = 2;
+            } else if (pemain[1].giliran == menang) {
+                pemainMenang = 2;
+                pemainKalah = 1;
+            } else {
+                pemainMenang = 0;
+                pemainKalah = 0;
+            }
+            akhir_permainan(mode, pemainMenang, pemainKalah, pemain);
+        } else {
+            menang = 1;
+        }
 
         // gotoxy(4, 12);
         // printf("Giliran");
@@ -169,6 +207,42 @@ void permainan() {
     }
 
     // menu_utama();
+}
+
+void akhir_permainan(int mode, int pemainMenang, int pemainKalah, Player pemain[2]) {
+    system("cls||clear");
+    int i;
+    int lebar = 94;
+    int tinggi = 30;
+
+    char ket[30];
+
+    if (pemainMenang == 1) {
+        sprintf(ket, "%s Win The Game!", pemain[0].nama);
+    } else if (pemainMenang == 2) {
+        if (mode == 1) {
+            sprintf(ket, "You Lose!");
+        } else {
+            sprintf(ket, "%s Win The Game!", pemain[1].nama);
+        }
+    } else {
+        sprintf(ket, "It's a Draw");
+    }
+
+    // print header
+    header(ket);
+
+    // print body menu permainan
+    for (i = 11; i < 11 + tinggi; i++) {
+        gotoxy(1, i);
+        printf("%c", 186);
+        gotoxy(lebar + 2, i);
+        printf("%c\n", 186);
+    }
+
+    printf("%c", 200);
+    for (i = 0; i < lebar; i++) printf("%c", 205);
+    printf("%c\n", 188);
 }
 
 void menu_permainan(Player pemain[2], int ukuran) {
@@ -181,7 +255,7 @@ void menu_permainan(Player pemain[2], int ukuran) {
     // print header
     header(ket);
 
-    // print body menu utama
+    // print body menu permainan
     for (i = 11; i < 11 + tinggi; i++) {
         gotoxy(1, i);
         printf("%c", 186);

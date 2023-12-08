@@ -1,5 +1,6 @@
 #include "board.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 
 #include "common.h"
@@ -154,4 +155,58 @@ void put_simbol(int letak, int giliran, int ukuran, int (*papan)[7][7]) {
         }
         baris++;
     }
+}
+
+int cek_papan(int ukuran, int papan[7][7]) {
+    int i, j, k, l, jml;
+    bool menang;
+
+    int sMenang = (ukuran == 7) ? 5 : ((ukuran == 5) ? 4 : ukuran);
+
+    menang = false;
+    // horizontal check
+    for (i = 0; i < ukuran; i++) {
+        jml = 0;
+        for (j = 0; j < ukuran; j++) {
+            k = papan[i][j];
+            if (k != 0) {
+                if (k == l) {
+                    jml++;
+                    if (jml == sMenang) {
+                        menang = true;
+                        break;
+                    }
+                } else {
+                    jml = 1;
+                }
+                l = k;
+            }
+        }
+        if (menang) {
+            return k;  // mengembalikan pemain yang menang berdasarkan simbol/gilirannya
+        }
+    }
+
+    // vertical check
+
+    // diagonal check
+
+    // cek seri
+    int totalMoves = ukuran * ukuran;
+    int filledCells = 0;
+
+    for (i = 0; i < ukuran; i++) {
+        for (j = 0; j < ukuran; j++) {
+            if (papan[i][j] != 0) {
+                filledCells++;
+            }
+        }
+    }
+
+    if (filledCells == totalMoves) {
+        return -1;  // permainan seri
+    }
+
+    // Jika kondisi menang atau seri belum terpenuhi
+    return 0;
 }

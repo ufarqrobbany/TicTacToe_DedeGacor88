@@ -29,7 +29,6 @@
 *.dylib
 
 # Executables
-*.exe
 *.out
 *.app
 *.i*86
@@ -54,3 +53,5 @@ dkms.conf
 # Custom
 .vscode
 tempCodeRunnerFile.cpp
+tictactoe.exe
+ttt.exe

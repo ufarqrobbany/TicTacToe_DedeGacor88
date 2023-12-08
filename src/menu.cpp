@@ -42,6 +42,9 @@ void menu_opsi(char nama_menu[20], int jml_opsi, char opsi[10][20], int *select,
         }
 
         gotoxy(1, i + 14);
+        printf("Gunakan tombol panah untuk navigasi. Tekan Enter untuk konfirmasi.");
+
+        gotoxy(1, i + 15);
         if (can_back) printf("Tekan ESC untuk kembali...");
 
         // navigasi menu

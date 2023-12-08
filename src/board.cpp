@@ -113,10 +113,7 @@ void display_papan(int ukuran, int papan[7][7], int selection) {
     }
     printf("%c", 188);
 
-    gotoxy(4, (baris++) + 1);
-    printf("Letakkan simbol pada petak yang kosong dalam waktu kurang dari 10 detik.");
-
-    gotoxy(1, baris + 3);
+    gotoxy(1, baris + 4);
     printf("Gunakan tombol panah untuk navigasi. Tekan Enter untuk konfirmasi.");
 }
 
@@ -261,18 +258,18 @@ int cek_papan(int ukuran, int papan[7][7]) {
     }
 
     // cek seri
-    int totalMoves = ukuran * ukuran;
-    int filledCells = 0;
+    int jmlPetak = ukuran * ukuran;
+    int selTerisi = 0;
 
     for (i = 0; i < ukuran; i++) {
         for (j = 0; j < ukuran; j++) {
             if (papan[i][j] != 0) {
-                filledCells++;
+                selTerisi++;
             }
         }
     }
 
-    if (filledCells == totalMoves) {
+    if (selTerisi == jmlPetak) {
         return -1;  // permainan seri
     }
 

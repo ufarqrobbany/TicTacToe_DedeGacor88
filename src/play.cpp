@@ -7,6 +7,7 @@
 #include <windows.h>
 
 #include "board.h"
+#include "bot.h"
 #include "common.h"
 #include "header.h"
 #include "menu.h"
@@ -93,6 +94,7 @@ void permainan() {
         struct tm *waktu = localtime(&saat_ini);
         int countdown = saat_ini;
         int sisa_waktu;
+        bool isBot = false;
 
         int giliran_saat_ini = 1;
 
@@ -131,7 +133,23 @@ void permainan() {
                 printf("Sisa Waktu: %-2d Detik", (sisa_waktu >= 0) ? sisa_waktu : 0);
                 display_papan(ukuran, papan, current_selection);
 
+                // jeda pergantian pemain dari computer
+                if ((giliran_saat_ini == pemain[1].giliran) && (mode == 1) && (isBot)) {
+                    sleep(2);
+                    countdown = saat_ini;
+
+                    // alih giliran
+                    if (giliran_saat_ini == 1) {
+                        giliran_saat_ini = 2;
+                    } else {
+                        giliran_saat_ini = 1;
+                    }
+                }
+
                 if ((giliran_saat_ini == pemain[0].giliran) || ((giliran_saat_ini == pemain[1].giliran) && (mode == 2))) {
+                    gotoxy(4, 13 + (ukuran * 4) + 3);
+                    printf("Letakkan simbol pada petak yang kosong dalam waktu kurang dari 10 detik.");
+                    isBot = false;
                     do {
                         key = getch();
 
@@ -182,15 +200,22 @@ void permainan() {
                         }
                     }
                 } else {
+                    current_selection = 0;
+                    gotoxy(4, 13 + (ukuran * 4) + 3);
+                    printf("Tunggu Computer meletakkan simbolnya...                                        ");
+                    isBot = true;
+
                     // bot komputer
-
-                    break;
+                    current_selection = bot(ukuran, papan);
+                    put_simbol(current_selection, giliran_saat_ini, ukuran, &papan);
+                    menang = cek_papan(ukuran, papan);
                 }
-
             } while (menang == 0);
 
             int pemainMenang, pemainKalah;
             if (menang != 0) {
+                display_papan(ukuran, papan, current_selection);
+                sleep(2);
                 if (pemain[0].giliran == menang) {
                     pemain[0].skor++;
                     pemainMenang = 1;
@@ -205,6 +230,7 @@ void permainan() {
                 }
                 main = akhir_permainan(mode, pemainMenang, pemainKalah, pemain);
             } else {
+                // pause
                 menang = 1;
             }
         }
@@ -259,9 +285,9 @@ int akhir_permainan(int mode, int pemainMenang, int pemainKalah, Player pemain[2
     gotoxy(4, 17);
     printf("Skor saat ini ");
     gotoxy(4, 18);
-    printf("%s (%c) \t: %d", pemain[0].nama, pemain[0].simbol, pemain[0].skor);
+    printf("    %s (%c) \t: %d", pemain[0].nama, pemain[0].simbol, pemain[0].skor);
     gotoxy(4, 19);
-    printf("%s (%c) \t: %d", pemain[1].nama, pemain[1].simbol, pemain[1].skor);
+    printf("    %s (%c) \t: %d", pemain[1].nama, pemain[1].simbol, pemain[1].skor);
 
     // print header
     gotoxy(1, 1);
@@ -364,6 +390,8 @@ struct Player *input_nama(int mode) {
     printf("%c\n", 188);
 
     gotoxy(1, mode + 14);
+    printf("Masukkan nama kamu. Tekan Enter untuk konfirmasi.");
+    gotoxy(1, mode + 15);
     printf("Tekan ESC untuk kembali...");
 
     // print isi body
@@ -398,6 +426,7 @@ struct Player *input_nama(int mode) {
                     n = 0;
                     gotoxy(14 + n, 11 + p);
                 } else {
+                    if ((mode == 1) && (p == 1)) namapemain1[n] = '\0';
                     if ((mode == 2) && (p == 2)) namapemain2[n] = '\0';
                     break;
                 }

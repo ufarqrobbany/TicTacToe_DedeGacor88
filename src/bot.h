@@ -1,0 +1,1 @@
+int bot(int ukuran, int papan[7][7]);

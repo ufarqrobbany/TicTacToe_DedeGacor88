@@ -180,6 +180,8 @@ int cek_papan(int ukuran, int papan[7][7]) {
                     jml = 1;
                 }
                 l = k;
+            } else {
+                jml = 0;
             }
         }
         if (menang) {

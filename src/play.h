@@ -12,4 +12,4 @@ int pilih_level();
 int pilih_ukuran();
 int pilih_simbol();
 void menu_permainan(Player pemain[2], int ukuran);
-void akhir_permainan(int mode, int pemainMenang, int pemainKalah, Player pemain[2]);
+int akhir_permainan(int mode, int pemainMenang, int pemainKalah, Player pemain[2]);

@@ -24,7 +24,6 @@ void permainan() {
     while (mode == 0) {
         mode = pilih_mode();
         if (mode == -1) {
-            mulai = 0;
             break;
         }
 
@@ -84,7 +83,10 @@ void permainan() {
         }
     }
 
-    if (mulai == 1) {
+    pemain[0].skor = 0;
+    pemain[1].skor = 0;
+
+    while (mulai == 1) {
         init_papan(ukuran, &papan);
 
         time_t saat_ini = time(0);
@@ -95,8 +97,6 @@ void permainan() {
         int giliran_saat_ini = 1;
 
         char skorP1[3], skorP2[3], skor[10];
-        pemain[0].skor = 0;
-        pemain[1].skor = 20;
 
         menang = 0;
         while (menang == 0 && key != 27) {
@@ -187,57 +187,84 @@ void permainan() {
                     break;
                 }
 
-            } while (key != 27 && menang == 0);
+            } while (menang == 0);
 
             int pemainMenang, pemainKalah;
             if (menang != 0) {
                 if (pemain[0].giliran == menang) {
+                    pemain[0].skor++;
                     pemainMenang = 1;
                     pemainKalah = 2;
                 } else if (pemain[1].giliran == menang) {
+                    pemain[1].skor++;
                     pemainMenang = 2;
                     pemainKalah = 1;
                 } else {
                     pemainMenang = 0;
                     pemainKalah = 0;
                 }
-                akhir_permainan(mode, pemainMenang, pemainKalah, pemain);
+                mulai = akhir_permainan(mode, pemainMenang, pemainKalah, pemain);
             } else {
                 menang = 1;
             }
-
-            // gotoxy(4, 12);
-            // printf("Giliran");
-            // display_papan(ukuran, papan);
-            // scanf("%d", &letak);
-            // cek_papan();
         }
-    } else {
-        menu_utama();
     }
+
+    menu_utama();
 }
 
-void akhir_permainan(int mode, int pemainMenang, int pemainKalah, Player pemain[2]) {
+int akhir_permainan(int mode, int pemainMenang, int pemainKalah, Player pemain[2]) {
     system("cls||clear");
     int i;
     int lebar = 94;
-    int tinggi = 30;
+    int tinggi = 13;
+    char key;
+    int current_selection = 1;
 
     char ket[30];
 
+    gotoxy(4, 12);
     if (pemainMenang == 1) {
-        sprintf(ket, "%s Win The Game!", pemain[0].nama);
+        sprintf(ket, "%s (%c) Win The Game!", pemain[0].nama, pemain[0].simbol);
+        printf("Good game, %s (%c)!", pemain[0].nama, pemain[0].simbol);
+        gotoxy(4, 13);
+        printf("Kamu telah mengalahkan %s (%c) dalam permainan ini", pemain[1].nama, pemain[1].simbol);
+        gotoxy(4, 15);
+        printf("GACOR BANGET BANG!");
     } else if (pemainMenang == 2) {
         if (mode == 1) {
             sprintf(ket, "You Lose!");
+            printf("Game over, %s (%c)", pemain[0].nama, pemain[0].simbol);
+            gotoxy(4, 13);
+            printf("Kamu telah dikalahkan oleh Computer dalam permainan ini");
+            gotoxy(4, 15);
+            printf("KAMU KURANG GACOR, COBA LAGI YA!");
         } else {
-            sprintf(ket, "%s Win The Game!", pemain[1].nama);
+            sprintf(ket, "%s (%c) Win The Game!", pemain[1].nama, pemain[1].simbol);
+            printf("Good game, %s (%c)!", pemain[1].nama, pemain[1].simbol);
+            gotoxy(4, 13);
+            printf("Kamu telah mengalahkan %s (%c) dalam permainan ini", pemain[0].nama, pemain[0].simbol);
+            gotoxy(4, 15);
+            printf("GACOR BANGET BANG!");
         }
     } else {
         sprintf(ket, "It's a Draw");
+        printf("Try again, %s (%c)", pemain[0].nama, pemain[0].simbol);
+        gotoxy(4, 13);
+        printf("Permainan ini dinyatakan seri");
+        gotoxy(4, 15);
+        printf("DUA DUANYA GACOR!");
     }
 
+    gotoxy(4, 17);
+    printf("Skor saat ini ");
+    gotoxy(4, 18);
+    printf("%s (%c) \t: %d", pemain[0].nama, pemain[0].simbol, pemain[0].skor);
+    gotoxy(4, 19);
+    printf("%s (%c) \t: %d", pemain[1].nama, pemain[1].simbol, pemain[1].skor);
+
     // print header
+    gotoxy(1, 1);
     header(ket);
 
     // print body menu permainan
@@ -252,8 +279,26 @@ void akhir_permainan(int mode, int pemainMenang, int pemainKalah, Player pemain[
     for (i = 0; i < lebar; i++) printf("%c", 205);
     printf("%c\n", 188);
 
-    // print isi body
-    gotoxy(4, 12);
+    // opsi
+    do {
+        gotoxy(4, 21);
+        printf("%c %s", (current_selection == 1) ? 254 : ' ', "Main lagi!");
+        gotoxy(4, 22);
+        printf("%c %s", (current_selection == 2) ? 254 : ' ', "Berhenti main");
+
+        key = getch();
+        if ((key == 72) && (current_selection > 1)) {
+            current_selection -= 1;
+        } else if ((key == 80) && (current_selection < 2)) {
+            current_selection += 1;
+        } else if (key == 13) {
+            if (current_selection == 1) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    } while (key != 13);
 }
 
 void menu_permainan(Player pemain[2], int ukuran) {

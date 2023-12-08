@@ -13,13 +13,13 @@
 
 void permainan() {
     Player *pemain = (Player *)malloc(sizeof(Player) * 2);
-    int mode, level, ukuran, nama, simbol, mulai, letak, menang;
+    int mode, level, ukuran, nama, simbol, main, letak, menang;
     int papan[7][7];
     char key;
     int current_selection = 1;
 
     // inisialisasi pengaturan game
-    mulai = 0;
+    main = 0;
     mode = 0;
     while (mode == 0) {
         mode = pilih_mode();
@@ -65,13 +65,13 @@ void permainan() {
                                 pemain[1].simbol = 'O';
                                 pemain[0].giliran = 1;
                                 pemain[1].giliran = 2;
-                                mulai = 1;
+                                main = 1;
                             } else if (simbol == 2) {
                                 pemain[0].simbol = 'O';
                                 pemain[1].simbol = 'X';
                                 pemain[0].giliran = 2;
                                 pemain[1].giliran = 1;
-                                mulai = 1;
+                                main = 1;
                             } else {
                                 ukuran = 0;
                             }
@@ -86,7 +86,7 @@ void permainan() {
     pemain[0].skor = 0;
     pemain[1].skor = 0;
 
-    while (mulai == 1) {
+    while (main == 1) {
         init_papan(ukuran, &papan);
 
         time_t saat_ini = time(0);
@@ -203,7 +203,7 @@ void permainan() {
                     pemainMenang = 0;
                     pemainKalah = 0;
                 }
-                mulai = akhir_permainan(mode, pemainMenang, pemainKalah, pemain);
+                main = akhir_permainan(mode, pemainMenang, pemainKalah, pemain);
             } else {
                 menang = 1;
             }

@@ -190,8 +190,75 @@ int cek_papan(int ukuran, int papan[7][7]) {
     }
 
     // vertical check
+    for (j = 0; j < ukuran; j++) {
+        jml = 0;
+        for (i = 0; i < ukuran; i++) {
+            k = papan[i][j];
+            if (k != 0) {
+                if (k == l) {
+                    jml++;
+                    if (jml == sMenang) {
+                        menang = true;
+                        break;
+                    }
+                } else {
+                    jml = 1;
+                }
+                l = k;
+            } else {
+                jml = 0;
+            }
+        }
+        if (menang) {
+            return k;  // mengembalikan pemain yang menang berdasarkan simbol/gilirannya
+        }
+    }
 
-    // diagonal check
+    // diagonal check (main diagonal)
+    for (i = 0; i <= ukuran - sMenang; i++) {
+        for (j = 0; j <= ukuran - sMenang; j++) {
+            jml = 0;
+            for (int d = 0; d < sMenang; d++) {
+                k = papan[i + d][j + d];
+                if (k != 0) {
+                    if (k == l) {
+                        jml++;
+                        if (jml == sMenang) {
+                            return k;  // mengembalikan pemain yang menang berdasarkan simbol/gilirannya
+                        }
+                    } else {
+                        jml = 1;
+                    }
+                    l = k;
+                } else {
+                    jml = 0;
+                }
+            }
+        }
+    }
+
+    // diagonal check (anti-diagonal)
+    for (i = 0; i <= ukuran - sMenang; i++) {
+        for (j = sMenang - 1; j < ukuran; j++) {
+            jml = 0;
+            for (int d = 0; d < sMenang; d++) {
+                k = papan[i + d][j - d];
+                if (k != 0) {
+                    if (k == l) {
+                        jml++;
+                        if (jml == sMenang) {
+                            return k;  // mengembalikan pemain yang menang berdasarkan simbol/gilirannya
+                        }
+                    } else {
+                        jml = 1;
+                    }
+                    l = k;
+                } else {
+                    jml = 0;
+                }
+            }
+        }
+    }
 
     // cek seri
     int totalMoves = ukuran * ukuran;

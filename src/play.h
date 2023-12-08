@@ -1,5 +1,5 @@
 typedef struct Player {
-    char nama[10];
+    char nama[11];
     char simbol;
     int giliran;
 } Player;

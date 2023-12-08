@@ -210,7 +210,7 @@ int pilih_mode() {
 
 struct Player *input_nama(int mode) {
     system("cls||clear");
-    Player *npemain = (Player *)malloc(sizeof(Player) * 2);
+    char namapemain1[11], namapemain2[11];
     Player *pemain = (Player *)malloc(sizeof(Player) * 2);
     int i, n, p, baris;
     int lebar = 94;
@@ -247,48 +247,52 @@ struct Player *input_nama(int mode) {
     p = 1;
     n = 0;
     gotoxy(14, 12);
+
     do {
-        // navigasi menu
         key = getch();
 
         if (((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || (key >= '0' && key <= '9') || (key == ' ')) && (n < 10)) {
             if (p == 1) {
-                npemain[0].nama[n++] = key;
+                namapemain1[n] = key;
             } else {
-                npemain[1].nama[n++] = key;
+                namapemain2[n] = key;
             }
+            n++;
             printf("%c", key);
             gotoxy(14 + n, 11 + p);
-        } else if ((key == 13) && (n > 0)) {  // jika menekan tombol Enter dan n lebih dari 0 / ada karakter
-            if ((mode == 2) && (p == 1)) {
-                p = 2;
-                n = 0;
-                gotoxy(14 + n, 11 + p);
-            } else {
-                break;
-            }
-        } else if (key == 8) {  // jika menekan tombol backspace
-            // jika n lebih dari 0 / ada karakter
+        } else if (key == 13) {  // Enter key
             if (n > 0) {
-                // Pindahkan kursor ke belakang, hapus karakter, dan kurangi n
+                if ((mode == 2) && (p == 1)) {
+                    namapemain1[n] = '\0';
+                    p = 2;
+                    n = 0;
+                    gotoxy(14 + n, 11 + p);
+                } else {
+                    if ((mode == 2) && (p == 2)) namapemain2[n] = '\0';
+                    break;
+                }
+            }
+        } else if (key == 8) {  // Backspace key
+            if (n > 0) {
                 printf("\b \b");
                 n--;
             }
         }
-    } while (key != 27);  // Selama tidak menekan tombol ESC
+    } while (key != 27);  // ESC key
 
     if (key == 13) {
-        pemain[0] = npemain[0];
+        strcpy(pemain[0].nama, namapemain1);
+
         if (mode == 1) {
-            char name2[10] = "Computer";
-            strcpy(pemain[1].nama, name2);
+            char name2[11] = "Computer";
+            name2[sizeof(name2) - 1] = '\0';
+            strncpy(pemain[1].nama, name2, sizeof(pemain[1].nama));
         } else {
-            pemain[1] = npemain[1];
+            strcpy(pemain[1].nama, namapemain2);
         }
-        free(npemain);
+
         return pemain;
     } else if (key == 27) {
-        free(npemain);
         strcpy(pemain[0].nama, "");
         strcpy(pemain[1].nama, "");
         return pemain;

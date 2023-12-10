@@ -10,7 +10,7 @@
 #include "header.h"
 #include "score.h"
 
-int menu_opsi(char nama_menu[20], int jml_opsi, char opsi[10][20], bool can_back) {
+int MenuOpsi(char nama_menu[20], int jml_opsi, char opsi[10][20], bool can_back) {
     int i, x, y, lebar, tinggi, current_selection;
     char key;
 
@@ -19,7 +19,7 @@ int menu_opsi(char nama_menu[20], int jml_opsi, char opsi[10][20], bool can_back
     current_selection = 1;
 
     // print header
-    header(nama_menu);
+    Header(nama_menu);
 
     // print body menu
     for (y = 11; y < 11 + tinggi; y++) {
@@ -65,8 +65,8 @@ int menu_opsi(char nama_menu[20], int jml_opsi, char opsi[10][20], bool can_back
     } while (key != 13 || !(key == 27 && can_back));
 }
 
-void menu_utama() {
-    clear_screen();
+void MenuUtama() {
+    ClearScreen();
 
     int jml_opsi, selection;
     char menu[20];
@@ -81,28 +81,28 @@ void menu_utama() {
     strcpy(opsi[3], "Kredit");
     strcpy(opsi[4], "Keluar");
 
-    selection = menu_opsi(menu, jml_opsi, opsi, false);
+    selection = MenuOpsi(menu, jml_opsi, opsi, false);
 
     switch (selection) {
         case 1:
-            game();
+            Game();
             break;
         case 2:
-            menu_riwayat_skor();
+            MenuRiwayatSkor();
             break;
         case 3:
-            menu_bantuan();
+            MenuBantuan();
             break;
         case 4:
-            menu_kredit();
+            MenuKredit();
             break;
         case 5:
             break;
     }
 }
 
-void menu_riwayat_skor() {
-    clear_screen();
+void MenuRiwayatSkor() {
+    ClearScreen();
 
     int jml_opsi, selection;
     char menu[20];
@@ -115,17 +115,17 @@ void menu_riwayat_skor() {
     strcpy(opsi[1], "Riwayat Skor 5 x 5");
     strcpy(opsi[2], "Riwayat Skor 7 x 7");
 
-    selection = menu_opsi(menu, jml_opsi, opsi, true);
+    selection = MenuOpsi(menu, jml_opsi, opsi, true);
 
     if (selection != -1) {
-        display_skor((selection * 2) + 1);
+        DisplaySkor((selection * 2) + 1);
     } else {
-        menu_utama();
+        MenuUtama();
     }
 }
 
-void menu_bantuan() {
-    clear_screen();
+void MenuBantuan() {
+    ClearScreen();
 
     int y;
     char key, ch;
@@ -152,11 +152,11 @@ void menu_bantuan() {
         key = getch();
     } while (key != 27);  // selama tidak menekan tombol ESC
 
-    menu_utama();
+    MenuUtama();
 }
 
-void menu_kredit() {
-    clear_screen();
+void MenuKredit() {
+    ClearScreen();
 
     int i, x, y;
     int lebar = 94;
@@ -165,7 +165,7 @@ void menu_kredit() {
 
     // print header
     strcpy(text, "KREDIT");
-    header(text);
+    Header(text);
 
     gotoxy(1, 11);
     printf("%c", 186);
@@ -211,5 +211,5 @@ void menu_kredit() {
         key = getch();
     } while (key != 27);  // selama tidak menekan tombol ESC
 
-    menu_utama();
+    MenuUtama();
 }

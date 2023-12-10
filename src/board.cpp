@@ -5,7 +5,7 @@
 
 #include "common.h"
 
-void init_papan(int ukuran, int (*papan)[7][7]) {
+void InitPapan(int ukuran, int (*papan)[7][7]) {
     int baris, kolom;
     baris = 0;
 
@@ -19,26 +19,25 @@ void init_papan(int ukuran, int (*papan)[7][7]) {
     }
 }
 
-void display_papan(int ukuran, int papan[7][7], int selection) {
-    int i, j, nomor;
-    int baris = 14;
-    int nBaris = 1;
-    int nKolom = 1;
+void DisplayPapan(int ukuran, int papan[7][7], int selection) {
+    int i, j, nomor, baris;
+
+    baris = 14;
     nomor = 1;
 
-    const char *dimensiKosong;
+    const char *dimensi_kosong;
 
     if (ukuran == 3) {
-        dimensiKosong = "                                   ";
+        dimensi_kosong = "                                   ";
     } else if (ukuran == 5) {
-        dimensiKosong = "                           ";
+        dimensi_kosong = "                           ";
     } else {
-        dimensiKosong = "                   ";
+        dimensi_kosong = "                   ";
     }
 
     // Tampilkan atas
     gotoxy(2, baris++);
-    printf("%s%c", dimensiKosong, 201);
+    printf("%s%c", dimensi_kosong, 201);
     for (j = 1; j < ukuran * 8; j++) {
         if (j % 8 == 0) {
             printf("%c", 203);
@@ -51,7 +50,7 @@ void display_papan(int ukuran, int papan[7][7], int selection) {
     for (i = 0; i < ukuran; i++) {
         if (i != 0) {
             gotoxy(2, baris++);
-            printf("%s%c", dimensiKosong, 204);
+            printf("%s%c", dimensi_kosong, 204);
             for (j = 1; j < ukuran * 8; j++) {
                 if (j % 8 == 0) {
                     printf("%c", 206);
@@ -63,13 +62,13 @@ void display_papan(int ukuran, int papan[7][7], int selection) {
         }
 
         gotoxy(2, baris++);
-        printf("%s%c", dimensiKosong, 186);
+        printf("%s%c", dimensi_kosong, 186);
         for (j = 1; j <= ukuran; j++) {
             printf("       %c", 186);
         }
 
         gotoxy(2, baris++);
-        printf("%s%c", dimensiKosong, 186);
+        printf("%s%c", dimensi_kosong, 186);
         for (j = 0; j < ukuran; j++) {
             if (selection == nomor) printf("\033[48;5;33m");
             if (papan[i][j] == 0) {
@@ -93,17 +92,15 @@ void display_papan(int ukuran, int papan[7][7], int selection) {
         }
 
         gotoxy(2, baris++);
-        printf("%s%c", dimensiKosong, 186);
+        printf("%s%c", dimensi_kosong, 186);
         for (j = 0; j < ukuran; j++) {
             printf("       %c", 186);
         }
-
-        nBaris++;
     }
 
     // Tampilkan bawah
     gotoxy(2, baris++);
-    printf("%s%c", dimensiKosong, 200);
+    printf("%s%c", dimensi_kosong, 200);
     for (j = 1; j < ukuran * 8; j++) {
         if (j % 8 == 0) {
             printf("%c", 202);
@@ -117,7 +114,7 @@ void display_papan(int ukuran, int papan[7][7], int selection) {
     printf("Gunakan tombol panah untuk navigasi. Tekan Enter untuk konfirmasi.");
 }
 
-bool cek_sel(int letak, int ukuran, int papan[7][7]) {
+bool CekSel(int letak, int ukuran, int papan[7][7]) {
     int baris, kolom, i, zero;
     i = 1;
     baris = 0;
@@ -137,7 +134,7 @@ bool cek_sel(int letak, int ukuran, int papan[7][7]) {
     return zero;
 }
 
-void put_simbol(int letak, int giliran, int ukuran, int (*papan)[7][7]) {
+void PutSimbol(int letak, int giliran, int ukuran, int (*papan)[7][7]) {
     int baris, kolom, i;
     i = 1;
     baris = 0;
@@ -154,11 +151,11 @@ void put_simbol(int letak, int giliran, int ukuran, int (*papan)[7][7]) {
     }
 }
 
-int cek_papan(int ukuran, int papan[7][7]) {
+int CekPapan(int ukuran, int papan[7][7]) {
     int i, j, k, l, jml;
     bool menang;
 
-    int sMenang = (ukuran == 7) ? 5 : ((ukuran == 5) ? 4 : ukuran);
+    int syarat_menang = (ukuran == 7) ? 5 : ((ukuran == 5) ? 4 : ukuran);
 
     menang = false;
     // horizontal check
@@ -169,7 +166,7 @@ int cek_papan(int ukuran, int papan[7][7]) {
             if (k != 0) {
                 if (k == l) {
                     jml++;
-                    if (jml == sMenang) {
+                    if (jml == syarat_menang) {
                         menang = true;
                         break;
                     }
@@ -194,7 +191,7 @@ int cek_papan(int ukuran, int papan[7][7]) {
             if (k != 0) {
                 if (k == l) {
                     jml++;
-                    if (jml == sMenang) {
+                    if (jml == syarat_menang) {
                         menang = true;
                         break;
                     }
@@ -212,15 +209,15 @@ int cek_papan(int ukuran, int papan[7][7]) {
     }
 
     // diagonal check (main diagonal)
-    for (i = 0; i <= ukuran - sMenang; i++) {
-        for (j = 0; j <= ukuran - sMenang; j++) {
+    for (i = 0; i <= ukuran - syarat_menang; i++) {
+        for (j = 0; j <= ukuran - syarat_menang; j++) {
             jml = 0;
-            for (int d = 0; d < sMenang; d++) {
+            for (int d = 0; d < syarat_menang; d++) {
                 k = papan[i + d][j + d];
                 if (k != 0) {
                     if (k == l) {
                         jml++;
-                        if (jml == sMenang) {
+                        if (jml == syarat_menang) {
                             return k;  // mengembalikan pemain yang menang berdasarkan simbol/gilirannya
                         }
                     } else {
@@ -235,15 +232,15 @@ int cek_papan(int ukuran, int papan[7][7]) {
     }
 
     // diagonal check (anti-diagonal)
-    for (i = 0; i <= ukuran - sMenang; i++) {
-        for (j = sMenang - 1; j < ukuran; j++) {
+    for (i = 0; i <= ukuran - syarat_menang; i++) {
+        for (j = syarat_menang - 1; j < ukuran; j++) {
             jml = 0;
-            for (int d = 0; d < sMenang; d++) {
+            for (int d = 0; d < syarat_menang; d++) {
                 k = papan[i + d][j - d];
                 if (k != 0) {
                     if (k == l) {
                         jml++;
-                        if (jml == sMenang) {
+                        if (jml == syarat_menang) {
                             return k;  // mengembalikan pemain yang menang berdasarkan simbol/gilirannya
                         }
                     } else {
@@ -258,18 +255,18 @@ int cek_papan(int ukuran, int papan[7][7]) {
     }
 
     // cek seri
-    int jmlPetak = ukuran * ukuran;
-    int selTerisi = 0;
+    int jml_petak = ukuran * ukuran;
+    int sel_terisi = 0;
 
     for (i = 0; i < ukuran; i++) {
         for (j = 0; j < ukuran; j++) {
             if (papan[i][j] != 0) {
-                selTerisi++;
+                sel_terisi++;
             }
         }
     }
 
-    if (selTerisi == jmlPetak) {
+    if (sel_terisi == jml_petak) {
         return -1;  // permainan seri
     }
 

@@ -6,17 +6,17 @@
 
 #include "board.h"
 
-int bot(int ukuran, int papan[7][7]) {
-    int batasBawah, batasAtas, letak;
+int Bot(int ukuran, int papan[7][7]) {
+    int batas_bawah, batas_atas, letak;
     bool kosong;
 
-    batasBawah = 1;
-    batasAtas = ukuran * ukuran;
+    batas_bawah = 1;
+    batas_atas = ukuran * ukuran;
 
     do {
         srand(time(0));
-        letak = (rand() % batasAtas) + batasBawah;
-        kosong = cek_sel(letak, ukuran, papan);
+        letak = (rand() % batas_atas) + batas_bawah;
+        kosong = CekSel(letak, ukuran, papan);
     } while (!kosong);
 
     return letak;

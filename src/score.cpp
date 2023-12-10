@@ -14,7 +14,7 @@
 // add skor
 // get high score
 
-void print_tabel_skor(int x, int *y, char file[30], char title[50]) {
+void PrintTabelSkor(int x, int *y, char file[30], char title[50]) {
     int i, skor_1, skor_2, jml_data, valid;
     char w_mulai[22], w_selesai[22], pemain_1[15], pemain_2[15], pemain[32];
     FILE *data;
@@ -91,8 +91,8 @@ void print_tabel_skor(int x, int *y, char file[30], char title[50]) {
     printf("%c", 188);
 }
 
-void display_skor(int ukuran) {
-    clear_screen();
+void DisplaySkor(int ukuran) {
+    ClearScreen();
 
     int i, x, y, y2;
     int lebar = 94;
@@ -124,20 +124,20 @@ void display_skor(int ukuran) {
     gotoxy(x, 3);
     printf("vs Computer");
     strcpy(tabel, "SKOR TERTINGGI - TOP 3");
-    print_tabel_skor(x, &y, file_hsc, tabel);
+    PrintTabelSkor(x, &y, file_hsc, tabel);
     y++;
     strcpy(tabel, "RIWAYAT SKOR (30 Permainan Terakhir)");
-    print_tabel_skor(x, &y, file_sc, tabel);
+    PrintTabelSkor(x, &y, file_sc, tabel);
 
     x = 104;
     y2 = 5;
     gotoxy(x, 3);
     printf("vs Player");
     strcpy(tabel, "SKOR TERTINGGI - TOP 3");
-    print_tabel_skor(x, &y2, file_hsp, tabel);
+    PrintTabelSkor(x, &y2, file_hsp, tabel);
     y2++;
     strcpy(tabel, "RIWAYAT SKOR (30 Permainan Terakhir)");
-    print_tabel_skor(x, &y2, file_sp, tabel);
+    PrintTabelSkor(x, &y2, file_sp, tabel);
 
     gotoxy(1, (y > y2) ? (y + 1) : (y2 + 1));
     printf("Tekan ESC untuk kembali...");
@@ -146,5 +146,5 @@ void display_skor(int ukuran) {
         key = getch();
     } while (key != 27);  // selama tidak menekan tombol ESC
 
-    menu_riwayat_skor();
+    MenuRiwayatSkor();
 }

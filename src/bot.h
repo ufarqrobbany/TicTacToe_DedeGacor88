@@ -1,1 +1,1 @@
-int bot(int ukuran, int papan[7][7]);
+int Bot(int ukuran, int papan[7][7]);

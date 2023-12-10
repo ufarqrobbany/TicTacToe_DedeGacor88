@@ -1,7 +1,7 @@
-void header(char subheader[30]);
-void huruf_t(int x, int y);
-void huruf_i(int x, int y);
-void huruf_c(int x, int y);
-void huruf_a(int x, int y);
-void huruf_o(int x, int y);
-void huruf_e(int x, int y);
+void Header(char subheader[30]);
+void HurufT(int x, int y);
+void HurufI(int x, int y);
+void HurufC(int x, int y);
+void HurufA(int x, int y);
+void HurufO(int x, int y);
+void HurufE(int x, int y);

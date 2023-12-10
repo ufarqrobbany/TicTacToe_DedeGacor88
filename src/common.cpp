@@ -10,6 +10,6 @@ void gotoxy(int x, int y) {
     printf("%c[%d;%df", 0x1B, y, x);
 }
 
-void clear_screen() {
+void ClearScreen() {
     system("cls");
 }

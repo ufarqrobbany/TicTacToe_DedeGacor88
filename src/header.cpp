@@ -7,7 +7,7 @@
 #include "common.h"
 
 // header, untuk menampilkan header judul permainan
-void header(char subheader[30]) {
+void Header(char subheader[30]) {
     int i;
     int baris = 1;
     int lebar = 94;
@@ -40,17 +40,17 @@ void header(char subheader[30]) {
     printf("%c\n", 185);
 
     // printf judul permainan TIC TAC TOE pada header
-    huruf_t(3, 2);
-    huruf_i(15, 2);
-    huruf_c(19, 2);
+    HurufT(3, 2);
+    HurufI(15, 2);
+    HurufC(19, 2);
 
-    huruf_t(30, 2);
-    huruf_a(42, 2);
-    huruf_c(52, 2);
+    HurufT(30, 2);
+    HurufA(42, 2);
+    HurufC(52, 2);
 
-    huruf_t(63, 2);
-    huruf_o(75, 2);
-    huruf_e(85, 2);
+    HurufT(63, 2);
+    HurufO(75, 2);
+    HurufE(85, 2);
 
     // print tim pengembang
     gotoxy(3, tinggi + 1);
@@ -63,7 +63,7 @@ void header(char subheader[30]) {
 }
 
 // print huruf T
-void huruf_t(int x, int y) {
+void HurufT(int x, int y) {
     int i;
 
     // baris 1
@@ -88,7 +88,7 @@ void huruf_t(int x, int y) {
 }
 
 // print huruf I
-void huruf_i(int x, int y) {
+void HurufI(int x, int y) {
     int i;
 
     // baris 1
@@ -107,7 +107,7 @@ void huruf_i(int x, int y) {
 }
 
 // print huruf C
-void huruf_c(int x, int y) {
+void HurufC(int x, int y) {
     int i;
 
     // baris 1
@@ -140,7 +140,7 @@ void huruf_c(int x, int y) {
 }
 
 // print huruf A
-void huruf_a(int x, int y) {
+void HurufA(int x, int y) {
     int i;
 
     // baris 1
@@ -167,7 +167,7 @@ void huruf_a(int x, int y) {
 }
 
 // print huruf O
-void huruf_o(int x, int y) {
+void HurufO(int x, int y) {
     int i;
 
     // baris 1
@@ -196,7 +196,7 @@ void huruf_o(int x, int y) {
 }
 
 // print huruf E
-void huruf_e(int x, int y) {
+void HurufE(int x, int y) {
     int i;
 
     // baris 1

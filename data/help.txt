@@ -16,15 +16,18 @@ How To Play:
    anda dapat memilih kolom sel yang ditandai dengan nomer.
 
 	Jika memilih ukuran papan 3x3, 
-	anda dapat mengisi angka 1-9, 
+	anda dapat memilih petak sesuai keinginan,
+	gunakan tombol panah pada keyboard anda
 	untuk membentuk pola simbol agar bisa meraih kemenangan.
 
 	Jika memilih ukuran papan 5x5, 
-	anda dapat mengisi angka 1-25, 
+	anda dapat memilih petak sesuai keinginan,
+	gunakan tombol panah pada keyboard anda
 	untuk membentuk pola simbol agar bisa meraih kemenangan.
 
 	Jika memilih ukuran papan 7x7, 
-	anda dapat mengisi angka 1-49, 
+	anda dapat memilih petak sesuai keinginan
+	gunakan tombol panah pada keyboard anda
 	untuk membentuk pola simbol agar bisa meraih kemenangan.
 
 4. Jika anda berhasil memenangkan permainan, anda dapat meraih poin.

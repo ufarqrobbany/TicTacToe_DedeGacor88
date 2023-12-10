@@ -18,6 +18,7 @@ void permainan() {
     int papan[7][7];
     char key;
     int current_selection = 1;
+    int last_selection;
 
     // inisialisasi pengaturan game
     main = 0;
@@ -105,7 +106,38 @@ void permainan() {
             system("cls||clear");
             menu_permainan(pemain, ukuran);
 
+            // print skor
+            // ubah skor menjadi string
+            sprintf(skorP1, "%d", pemain[0].skor);
+            sprintf(skorP2, "%d", pemain[1].skor);
+            // gabungkan
+            strcpy(skor, skorP1);
+            strcat(skor, " - ");
+            strcat(skor, skorP2);
+
+            gotoxy(48 - (int)(strlen(skor) / 2) + 1, 12);
+            printf("%s", skor);
+
+            current_selection = 1;
+
             do {
+                // jeda pergantian pemain dari computer
+                if ((giliran_saat_ini == pemain[1].giliran) && (mode == 1) && (isBot)) {
+                    sleep(2);
+
+                    // alih giliran
+                    if (giliran_saat_ini == 1) {
+                        giliran_saat_ini = 2;
+                    } else {
+                        giliran_saat_ini = 1;
+                    }
+
+                    current_selection = last_selection;
+
+                    saat_ini = time(0);
+                    countdown = saat_ini;
+                }
+
                 // print giliran
                 gotoxy(4, 12);
                 if (giliran_saat_ini == pemain[0].giliran) {
@@ -114,37 +146,12 @@ void permainan() {
                     printf("Giliran: %s (%c)         ", pemain[1].nama, pemain[1].simbol);
                 }
 
-                // print skor
-                // ubah skor menjadi string
-                sprintf(skorP1, "%d", pemain[0].skor);
-                sprintf(skorP2, "%d", pemain[1].skor);
-                // gabungkan
-                strcpy(skor, skorP1);
-                strcat(skor, " - ");
-                strcat(skor, skorP2);
-
-                gotoxy(48 - (int)(strlen(skor) / 2) + 1, 12);
-                printf("%s", skor);
-
                 // print sisa waktu
                 saat_ini = time(0);
                 gotoxy(74, 12);
                 sisa_waktu = 10 - (saat_ini - countdown);
                 printf("Sisa Waktu: %-2d Detik", (sisa_waktu >= 0) ? sisa_waktu : 0);
                 display_papan(ukuran, papan, current_selection);
-
-                // jeda pergantian pemain dari computer
-                if ((giliran_saat_ini == pemain[1].giliran) && (mode == 1) && (isBot)) {
-                    sleep(2);
-                    countdown = saat_ini;
-
-                    // alih giliran
-                    if (giliran_saat_ini == 1) {
-                        giliran_saat_ini = 2;
-                    } else {
-                        giliran_saat_ini = 1;
-                    }
-                }
 
                 if ((giliran_saat_ini == pemain[0].giliran) || ((giliran_saat_ini == pemain[1].giliran) && (mode == 2))) {
                     gotoxy(4, 13 + (ukuran * 4) + 3);
@@ -200,14 +207,17 @@ void permainan() {
                         }
                     }
                 } else {
+                    last_selection = current_selection;
                     current_selection = 0;
+                    display_papan(ukuran, papan, current_selection);
+                    int bot_selection = 0;
                     gotoxy(4, 13 + (ukuran * 4) + 3);
                     printf("Tunggu Computer meletakkan simbolnya...                                        ");
                     isBot = true;
 
                     // bot komputer
-                    current_selection = bot(ukuran, papan);
-                    put_simbol(current_selection, giliran_saat_ini, ukuran, &papan);
+                    bot_selection = bot(ukuran, papan);
+                    put_simbol(bot_selection, giliran_saat_ini, ukuran, &papan);
                     menang = cek_papan(ukuran, papan);
                 }
             } while (menang == 0);

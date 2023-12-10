@@ -33,7 +33,7 @@ void display_papan(int ukuran, int papan[7][7], int selection) {
     } else if (ukuran == 5) {
         dimensiKosong = "                           ";
     } else {
-        dimensiKosong = "           ";
+        dimensiKosong = "                   ";
     }
 
     // Tampilkan atas

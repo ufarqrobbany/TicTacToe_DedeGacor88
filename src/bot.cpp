@@ -12,8 +12,11 @@ int Bot(int ukuran, int papan[7][7], int level, int giliran) {
     if (level == 1) {
         letak = RandomBot(ukuran, papan);
     } else if (level == 2) {
-        // letak = CariLangkahTerbaik(ukuran, papan, giliran);
-        letak = computerMove(ukuran, papan, giliran);
+        // medium
+        letak = MediumBot(ukuran, papan, giliran);
+    } else {
+        // hard
+        letak = HardBot(ukuran, papan, giliran);
     }
 
     return letak;
@@ -35,113 +38,97 @@ int RandomBot(int ukuran, int papan[7][7]) {
     return letak;
 }
 
-// Alpha:  nilai terbaik yang pemain harapkan saat ini atau lebih baik. Awalnya disetel ke nilai yang sangat buruk.
-// Beta: Ini adalah nilai terbaik yang pemain 'O' harapkan saat ini atau lebih baik. Awalnya disetel ke nilai yang sangat baik.
-// Depth: Ini adalah seberapa dalam kita telah menjelajahi pohon permainan. Semakin dalam, semakin banyak langkah atau kedalaman yang diperiksa algoritma.
-
-// // fungsi minimax dengan alpha-beta pruning
-// int Minimax(int ukuran, int papan[7][7], int depth, int is_max, int alpha, int beta) {
-//     int i, j;
-//     int score;
-
-//     // evaluasi semua langkah
-//     for (i = 0; i < ukuran; i++) {
-//         for (j = 0; j < ukuran; j++) {
-//             if (papan[i][j] == 0) {
-//                 if (is_max) {
-//                     papan[i][j] = 1;
-//                     score = Minimax(ukuran, papan, depth + 1, !is_max, alpha, beta);
-//                     alpha = alpha > score ? alpha : score;
-//                 } else {
-//                     papan[i][j] = 2;
-//                     score = Minimax(ukuran, papan, depth + 1, !is_max, alpha, beta);
-//                     beta = beta < score ? beta : score;
-//                 }
-
-//                 // reset nilai papan
-//                 papan[i][j] = 0;
-
-//                 // pemangkasan alpha-beta
-//                 if (beta <= alpha)
-//                     break;
-//             }
-//         }
-//     }
-
-//     // kembalikan skor terbaik
-//     return is_max ? alpha : beta;
-// }
-
-// // cari langkah terbaik berdasarkan algoritma minimax
-// int CariLangkahTerbaik(int ukuran, int papan[7][7], int giliran) {
-//     int nilai_terbaik, langkah_terbaik, i, j, nilai_langkah;
-
-//     nilai_terbaik = -99;
-//     langkah_terbaik = -1;
-
-//     for (i = 0; i < ukuran; i++) {
-//         for (j = 0; j < ukuran; j++) {
-//             if (papan[i][j] == 0) {
-//                 papan[i][j] = giliran;
-//                 nilai_langkah = Minimax(ukuran, papan, 0, 0, -99, 99);
-//                 papan[i][j] = 0;
-
-//                 if (nilai_langkah > nilai_terbaik) {
-//                     langkah_terbaik = i * ukuran + j + 1;
-//                     nilai_terbaik = nilai_langkah;
-//                 }
-//             }
-//         }
-//     }
-
-//     return langkah_terbaik;
-// }
-
-int minimax(int ukuran, int papan[7][7], int giliran) {
-    int move, score, this_score, i, j;
-
-    move = -1;
-    score = -2;
-
-    for (i = 0; i < ukuran; i++) {
-        for (j = 0; j < ukuran; j++) {
-            if (papan[i][j] == 0) {
-                papan[i][j] = giliran;
-                this_score = -minimax(ukuran, papan, giliran * -1);
-
-                if (this_score > score) {
-                    score = this_score;
-                    move = i * ukuran + j + 1;
+int CheckPotentialWin(int ukuran, int papan[7][7], int giliran) {
+    // Cek baris dan kolom
+    for (int i = 0; i < ukuran; ++i) {
+        int countBaris = 0, countKolom = 0;
+        for (int j = 0; j < ukuran; ++j) {
+            if (papan[i][j] == giliran) {
+                countBaris++;
+            }
+            if (papan[j][i] == giliran) {
+                countKolom++;
+            }
+        }
+        if (countBaris == ukuran - 1) {
+            for (int j = 0; j < ukuran; ++j) {
+                if (papan[i][j] == 0) {
+                    return i * ukuran + j + 1;
                 }
-
-                papan[i][j] = 0;
+            }
+        }
+        if (countKolom == ukuran - 1) {
+            for (int j = 0; j < ukuran; ++j) {
+                if (papan[j][i] == 0) {
+                    return j * ukuran + i + 1;
+                }
             }
         }
     }
 
-    if (move == -1) return 0;
-    return score;
+    // Cek diagonal
+    int countDiagonal = 0;
+    for (int i = 0; i < ukuran; ++i) {
+        if (papan[i][i] == giliran) {
+            countDiagonal++;
+        }
+    }
+    if (countDiagonal == ukuran - 1) {
+        for (int i = 0; i < ukuran; ++i) {
+            if (papan[i][i] == 0) {
+                return i * ukuran + i + 1;
+            }
+        }
+    }
+
+    // Cek anti-diagonal
+    int countAntiDiagonal = 0;
+    for (int i = 0; i < ukuran; ++i) {
+        if (papan[i][ukuran - i - 1] == giliran) {
+            countAntiDiagonal++;
+        }
+    }
+    if (countAntiDiagonal == ukuran - 1) {
+        for (int i = 0; i < ukuran; ++i) {
+            if (papan[i][ukuran - i - 1] == 0) {
+                return i * ukuran + (ukuran - i - 1) + 1;
+            }
+        }
+    }
+
+    return -1;  // Tidak ada potensi kemenangan atau blokir
 }
 
-int computerMove(int ukuran, int papan[7][7], int giliran) {
-    int move, score, temp_score, i, j;
+int MediumBot(int ukuran, int papan[7][7], int giliran) {
+    // Fungsi untuk bot tingkat medium
+    int letak;
 
-    move = -1;
-    score = -2;
-
-    for (i = 0; i < ukuran; i++) {
-        for (j = 0; j < ukuran; j++) {
-            if (papan[i][j] == 0) {
-                papan[i][j] = giliran;
-                int temp_score = -minimax(ukuran, papan, giliran * -1);
-                papan[i][j] = 0;
-                if (temp_score > score) {
-                    score = temp_score;
-                    move = i * ukuran + j + 1;
-                }
-            }
-        }
+    // Cek potensi kemenangan lawan dan blokir
+    letak = CheckPotentialWin(ukuran, papan, giliran);
+    if (letak != -1) {
+        return letak;
     }
 
-    return move;
+    // Jika tidak ada potensi kemenangan lawan, gunakan bot acak
+    return RandomBot(ukuran, papan);
+}
+
+int HardBot(int ukuran, int papan[7][7], int giliran) {
+    // Fungsi untuk bot tingkat hard
+    int letak;
+
+    // Cek potensi kemenangan sendiri
+    letak = CheckPotentialWin(ukuran, papan, giliran);
+    if (letak != -1) {
+        return letak;
+    }
+
+    // Cek potensi kemenangan lawan dan blokir
+    letak = CheckPotentialWin(ukuran, papan, 3 - giliran);
+    if (letak != -1) {
+        return letak;
+    }
+
+    // Jika tidak ada potensi kemenangan atau blokir lawan, gunakan bot acak
+    return RandomBot(ukuran, papan);
 }

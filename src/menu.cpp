@@ -1,78 +1,91 @@
 #include "menu.h"
 
 #include <conio.h>
-#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <windows.h>
+#include <string.h>
 
 #include "common.h"
+#include "game.h"
 #include "header.h"
-#include "play.h"
 #include "score.h"
 
-void menu_opsi(char nama_menu[20], int jml_opsi, char opsi[10][20], int *select, bool can_back) {
-    int i, baris;
-    int lebar = 94;
-    int tinggi = jml_opsi + 2;
+int menu_opsi(char nama_menu[20], int jml_opsi, char opsi[10][20], bool can_back) {
+    int i, x, y, lebar, tinggi, current_selection;
     char key;
-    int current_selection = 1;
+
+    lebar = 94;
+    tinggi = jml_opsi + 2;
+    current_selection = 1;
 
     // print header
     header(nama_menu);
 
-    // print body menu utama
-    for (i = 11; i < 11 + tinggi; i++) {
-        gotoxy(1, i);
+    // print body menu
+    for (y = 11; y < 11 + tinggi; y++) {
+        gotoxy(1, y);
         printf("%c", 186);
-        gotoxy(lebar + 2, i);
+        gotoxy(lebar + 2, y);
         printf("%c\n", 186);
     }
 
     printf("%c", 200);
-    for (i = 0; i < lebar; i++) printf("%c", 205);
+    for (x = 0; x < lebar; x++) printf("%c", 205);
     printf("%c\n", 188);
 
     // print isi body
     do {
         for (i = 0; i < jml_opsi; i++) {
-            gotoxy(4, i + 12);
+            y = i + 12;
+            gotoxy(4, y);
             printf("%c %s", (current_selection == i + 1) ? 254 : ' ', opsi[i]);
         }
 
-        gotoxy(1, i + 14);
+        gotoxy(1, y + 3);
         printf("Gunakan tombol panah untuk navigasi. Tekan Enter untuk konfirmasi.");
 
-        gotoxy(1, i + 15);
-        if (can_back) printf("Tekan ESC untuk kembali...");
+        if (can_back) {
+            gotoxy(1, y + 4);
+            printf("Tekan ESC untuk kembali...");
+        }
 
         // navigasi menu
         key = getch();
+
         if ((key == 72) && (current_selection > 1)) {
             current_selection -= 1;
         } else if ((key == 80) && (current_selection < jml_opsi)) {
             current_selection += 1;
         } else if (key == 13) {
-            *select = current_selection;
-            break;
+            return current_selection;
         } else if (key == 27 && can_back) {
-            break;
+            return -1;
         }
-    } while (key != 13 || (key != 27 && can_back == false));
+
+    } while (key != 13 || !(key == 27 && can_back));
 }
 
 void menu_utama() {
-    system("cls||clear");
+    clear_screen();
 
-    int jml_opsi = 5;
-    char menu[20] = "MENU UTAMA";
-    char opsi[jml_opsi][20] = {"Mulai Permainan", "Riwayat Skor", "Bantuan", "Kredit", "Keluar"};
-    int select = 0;
-    menu_opsi(menu, jml_opsi, opsi, &select, false);
-    switch (select) {
+    int jml_opsi, selection;
+    char menu[20];
+
+    jml_opsi = 5;
+    strcpy(menu, "MENU UTAMA");
+
+    char opsi[jml_opsi][20];
+    strcpy(opsi[0], "Mulai Permainan");
+    strcpy(opsi[1], "Riwayat Skor");
+    strcpy(opsi[2], "Bantuan");
+    strcpy(opsi[3], "Kredit");
+    strcpy(opsi[4], "Keluar");
+
+    selection = menu_opsi(menu, jml_opsi, opsi, false);
+
+    switch (selection) {
         case 1:
-            permainan();
+            game();
             break;
         case 2:
             menu_riwayat_skor();
@@ -88,88 +101,106 @@ void menu_utama() {
     }
 }
 
-void menu_bantuan() {
-    system("cls||clear");
+void menu_riwayat_skor() {
+    clear_screen();
 
-    int i, baris, ch;
-    int lebar = 94;
-    char key;
+    int jml_opsi, selection;
+    char menu[20];
+
+    jml_opsi = 3;
+    strcpy(menu, "SKOR");
+
+    char opsi[jml_opsi][20];
+    strcpy(opsi[0], "Riwayat Skor 3 x 3");
+    strcpy(opsi[1], "Riwayat Skor 5 x 5");
+    strcpy(opsi[2], "Riwayat Skor 7 x 7");
+
+    selection = menu_opsi(menu, jml_opsi, opsi, true);
+
+    if (selection != -1) {
+        display_skor((selection * 2) + 1);
+    } else {
+        menu_utama();
+    }
+}
+
+void menu_bantuan() {
+    clear_screen();
+
+    int y;
+    char key, ch;
     FILE *data;
 
-    // print header
-    char str[] = "BANTUAN";
-    header(str);
-
-    // print isi konten body
+    // print data
     data = fopen("data/help.txt", "r");
-    gotoxy(4, 12);
-    baris = 1;
+    y = 1;
+    gotoxy(1, y);
     while ((ch = getc(data)) != EOF) {
         putchar(ch);
 
         if (ch == '\n') {
-            gotoxy(4, baris + 12);
-            baris++;
+            y++;
+            gotoxy(1, y);
         }
     }
     fclose(data);
-    free(data);
 
-    // print container body yang tinggi nya menyesuaikan konten
-    for (i = 11; i < 11 + baris + 2; i++) {
-        gotoxy(1, i);
-        printf("%c", 186);
-        gotoxy(lebar + 2, i);
-        printf("%c\n", 186);
-    }
-
-    printf("%c", 200);
-    for (i = 0; i < lebar; i++) printf("%c", 205);
-    printf("%c\n", 188);
-
+    gotoxy(1, y + 2);
     printf("Tekan ESC untuk kembali...");
 
     do {
         key = getch();
     } while (key != 27);  // selama tidak menekan tombol ESC
+
     menu_utama();
 }
 
 void menu_kredit() {
-    system("cls||clear");
+    clear_screen();
 
-    int i, baris, ch;
+    int i, x, y;
     int lebar = 94;
-    char key;
+    char key, ch, text[100];
     FILE *data;
 
     // print header
-    char str[] = "KREDIT";
-    header(str);
+    strcpy(text, "KREDIT");
+    header(text);
 
-    // print isi konten body
+    gotoxy(1, 11);
+    printf("%c", 186);
+    gotoxy(lebar + 2, 11);
+    printf("%c\n", 186);
+
+    // print data
     data = fopen("data/credits.txt", "r");
-    gotoxy(4, 12);
-    baris = 1;
-    while ((ch = getc(data)) != EOF) {
-        putchar(ch);
+    x = 4;
+    y = 12;
+    while (!feof(data)) {
+        ch = getc(data);
 
-        if (ch == '\n') {
-            gotoxy(4, baris + 12);
-            baris++;
+        gotoxy(x, y);
+        putchar(ch);
+        x++;
+
+        if ((ch == '\n') || (ch == EOF)) {
+            gotoxy(1, y);
+            printf("%c", 186);
+            gotoxy(lebar + 2, y);
+            printf("%c\n", 186);
+            x = 4;
+            y++;
         }
     }
     fclose(data);
-    free(data);
 
-    // print container body yang tinggi nya menyesuaikan konten
-    for (i = 11; i < 11 + baris + 2; i++) {
-        gotoxy(1, i);
-        printf("%c", 186);
-        gotoxy(lebar + 2, i);
-        printf("%c\n", 186);
-    }
+    gotoxy(1, y);
+    printf("%c", 186);
+    gotoxy(lebar + 2, y);
+    printf("%c\n", 186);
+    y++;
 
+    gotoxy(1, y);
     printf("%c", 200);
     for (i = 0; i < lebar; i++) printf("%c", 205);
     printf("%c\n", 188);
@@ -179,5 +210,6 @@ void menu_kredit() {
     do {
         key = getch();
     } while (key != 27);  // selama tidak menekan tombol ESC
+
     menu_utama();
 }

@@ -11,117 +11,140 @@
 #include "header.h"
 #include "menu.h"
 
-void print_tabel_skor(int *baris, char file[30], char title[50]) {
-    int i;
-    FILE *data;
-    char w_mulai[22], w_selesai[22], pemain_1[11], pemain_2[11], pemain[25], skor_1[3], skor_2[3];
+// add skor
+// get high score
 
-    // print title tabel
-    gotoxy(4, (*baris)++);
+void print_tabel_skor(int x, int *y, char file[30], char title[50]) {
+    int i, skor_1, skor_2, jml_data, valid;
+    char w_mulai[22], w_selesai[22], pemain_1[15], pemain_2[15], pemain[32];
+    FILE *data;
+
+    // print nama tabel
+    gotoxy(x, (*y)++);
     printf(title);
 
     // print header tabel
-    gotoxy(4, (*baris)++);
+    gotoxy(x, (*y)++);
     printf("%c", 201);
     for (i = 0; i < 23; i++) printf("%c", 205);
     printf("%c", 203);
-    for (i = 0; i < 26; i++) printf("%c", 205);
+    for (i = 0; i < 34; i++) printf("%c", 205);
     printf("%c", 203);
     for (i = 0; i < 15; i++) printf("%c", 205);
     printf("%c", 203);
-    for (i = 0; i < 21; i++) printf("%c", 205);
+    for (i = 0; i < 23; i++) printf("%c", 205);
     printf("%c", 187);
 
-    gotoxy(4, (*baris)++);
-    printf("%c      Waktu Mulai      %c          Pemain          %c      Skor     %c    Waktu Selesai    %c", 186, 186, 186, 186, 186);
+    gotoxy(x, (*y)++);
+    printf("%c      Waktu Mulai      %c              Pemain              %c      Skor     %c     Waktu Selesai     %c", 186, 186, 186, 186, 186);
 
-    gotoxy(4, (*baris)++);
+    gotoxy(x, (*y)++);
     printf("%c", 204);
     for (i = 0; i < 23; i++) printf("%c", 205);
     printf("%c", 206);
-    for (i = 0; i < 26; i++) printf("%c", 205);
+    for (i = 0; i < 34; i++) printf("%c", 205);
     printf("%c", 206);
     for (i = 0; i < 15; i++) printf("%c", 205);
     printf("%c", 206);
-    for (i = 0; i < 21; i++) printf("%c", 205);
+    for (i = 0; i < 23; i++) printf("%c", 205);
     printf("%c", 185);
 
-    // print data & body tabel
+    // print data
     data = fopen(file, "r");
+
+    jml_data = 0;
     if (data != NULL) {
-        while ((fscanf(data, "%[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%[^\n]\n", w_mulai, pemain_1, pemain_2, skor_1, skor_2, w_selesai) == 6) && !feof(data)) {
-            gotoxy(4, (*baris)++);
-            fflush(stdin);
-            printf("%c %-21s %c", 186, w_mulai, 186);
-            sprintf(pemain, "%s vs %s", pemain_1, pemain_2);
-            printf(" %-24s ", pemain);
-            printf("%c", 186);
-            gotoxy(62 - (strlen(skor_1) + 1), (*baris) - 1);
-            printf(" %s - ", skor_1);
-            printf("%s", skor_2);
-            for (i = 0; i < 6 - strlen(skor_2); i++) printf(" ");
-            printf("%c %-19s %c", 186, w_selesai, 186);
+        while (!feof(data) && (jml_data < 30)) {
+            valid = fscanf(data, "%[^#]#%[^#]#%[^#]#%d#%d#%[^\n]\n", w_mulai, pemain_1, pemain_2, &skor_1, &skor_2, w_selesai);
+            if (valid == 6) {
+                // print waktu mulai
+                gotoxy(x, *y);
+                printf("%c %-21s %c", 186, w_mulai, 186);
+                // print nama pemain dan simbolnya
+                printf(" %s vs %s ", pemain_1, pemain_2);
+                // print skor
+                gotoxy(x + 59, *y);
+                printf("%c %d - %d", 186, skor_1, skor_2);
+                // print waktu selesai
+                gotoxy(x + 75, *y);
+                printf("%c %-21s %c", 186, w_selesai, 186);
+                (*y)++;
+                jml_data++;
+            }
         }
         fclose(data);
-        free(data);
     } else {
-        gotoxy(4, (*baris)++);
+        gotoxy(x, (*y) + 1);
         printf("Tidak ada file");
     }
 
     // print penutup tabel
-    gotoxy(4, (*baris)++);
+    gotoxy(x, (*y)++);
     printf("%c", 200);
     for (i = 0; i < 23; i++) printf("%c", 205);
     printf("%c", 202);
-    for (i = 0; i < 26; i++) printf("%c", 205);
+    for (i = 0; i < 34; i++) printf("%c", 205);
     printf("%c", 202);
     for (i = 0; i < 15; i++) printf("%c", 205);
     printf("%c", 202);
-    for (i = 0; i < 21; i++) printf("%c", 205);
+    for (i = 0; i < 23; i++) printf("%c", 205);
     printf("%c", 188);
-    (*baris)++;
 }
 
-void menu_riwayat_skor() {
-    system("cls||clear");
+void display_skor(int ukuran) {
+    clear_screen();
 
-    int i, baris;
+    int i, x, y, y2;
     int lebar = 94;
-    int tinggi = 14;
-    char key;
+    char key, tabel[50], file_sc[50], file_sp[50], file_hsc[50], file_hsp[50];
 
-    // print header
-    char str[] = "SKOR";
-    header(str);
-
-    // print isi konten body
-    // print tabel
-    baris = 12;
-    char titlehs[] = "SKOR TERTINGGI - TOP 3";
-    char highscore[30] = "data/highscores.txt";
-    print_tabel_skor(&baris, highscore, titlehs);
-
-    char titles[] = "RIWAYAT SKOR";
-    char score[20] = "data/scores.txt";
-    print_tabel_skor(&baris, score, titles);
-
-    // print container body yang tinggi nya menyesuaikan konten
-    for (i = 11; i < baris; i++) {
-        gotoxy(1, i);
-        printf("%c", 186);
-        gotoxy(lebar + 2, i);
-        printf("%c\n", 186);
+    if (ukuran == 3) {
+        printf("RIWAYAT SKOR 3 x 3");
+        strcpy(file_sc, "data/scores/comp_3x3.txt");
+        strcpy(file_sp, "data/scores/player_3x3.txt");
+        strcpy(file_hsc, "data/highscores/comp_3x3.txt");
+        strcpy(file_hsp, "data/highscores/player_3x3.txt");
+    } else if (ukuran == 5) {
+        printf("RIWAYAT SKOR 5 x 5");
+        strcpy(file_sc, "data/scores/comp_5x5.txt");
+        strcpy(file_sp, "data/scores/player_5x5.txt");
+        strcpy(file_hsc, "data/highscores/comp_5x5.txt");
+        strcpy(file_hsp, "data/highscores/player_5x5.txt");
+    } else {
+        printf("RIWAYAT SKOR 7 x 7");
+        strcpy(file_sc, "data/scores/comp_7x7.txt");
+        strcpy(file_sp, "data/scores/player_7x7.txt");
+        strcpy(file_hsc, "data/highscores/comp_7x7.txt");
+        strcpy(file_hsp, "data/highscores/player_7x7.txt");
     }
 
-    printf("%c", 200);
-    for (i = 0; i < lebar; i++) printf("%c", 205);
-    printf("%c\n", 188);
+    // print tabel
+    x = 1;
+    y = 5;
+    gotoxy(x, 3);
+    printf("vs Computer");
+    strcpy(tabel, "SKOR TERTINGGI - TOP 3");
+    print_tabel_skor(x, &y, file_hsc, tabel);
+    y++;
+    strcpy(tabel, "RIWAYAT SKOR (30 Permainan Terakhir)");
+    print_tabel_skor(x, &y, file_sc, tabel);
 
+    x = 104;
+    y2 = 5;
+    gotoxy(x, 3);
+    printf("vs Player");
+    strcpy(tabel, "SKOR TERTINGGI - TOP 3");
+    print_tabel_skor(x, &y2, file_hsp, tabel);
+    y2++;
+    strcpy(tabel, "RIWAYAT SKOR (30 Permainan Terakhir)");
+    print_tabel_skor(x, &y2, file_sp, tabel);
+
+    gotoxy(1, (y > y2) ? (y + 1) : (y2 + 1));
     printf("Tekan ESC untuk kembali...");
 
     do {
         key = getch();
     } while (key != 27);  // selama tidak menekan tombol ESC
-    menu_utama();
+
+    menu_riwayat_skor();
 }

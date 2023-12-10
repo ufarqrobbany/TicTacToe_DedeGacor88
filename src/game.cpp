@@ -501,7 +501,6 @@ struct Player *InputNama(int mode) {
         } else {
             strcpy(pemain[1].nama, nama_pemain_2);
         }
-
         return pemain;
     } else if (key == 27) {
         strcpy(pemain[0].nama, "");

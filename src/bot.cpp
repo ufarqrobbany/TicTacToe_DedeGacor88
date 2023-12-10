@@ -38,7 +38,7 @@ int RandomBot(int ukuran, int papan[7][7]) {
     return letak;
 }
 
-int CheckPotentialWin(int ukuran, int papan[7][7], int giliran) {
+int CekPotentialWin(int ukuran, int papan[7][7], int giliran) {
     // Cek baris dan kolom
     for (int i = 0; i < ukuran; ++i) {
         int countBaris = 0, countKolom = 0;
@@ -104,7 +104,7 @@ int MediumBot(int ukuran, int papan[7][7], int giliran) {
     int letak;
 
     // Cek potensi kemenangan lawan dan blokir
-    letak = CheckPotentialWin(ukuran, papan, giliran);
+    letak = CekPotentialWin(ukuran, papan, 3 - giliran);
     if (letak != -1) {
         return letak;
     }
@@ -118,13 +118,13 @@ int HardBot(int ukuran, int papan[7][7], int giliran) {
     int letak;
 
     // Cek potensi kemenangan sendiri
-    letak = CheckPotentialWin(ukuran, papan, giliran);
+    letak = CekPotentialWin(ukuran, papan, giliran);
     if (letak != -1) {
         return letak;
     }
 
     // Cek potensi kemenangan lawan dan blokir
-    letak = CheckPotentialWin(ukuran, papan, 3 - giliran);
+    letak = CekPotentialWin(ukuran, papan, 3 - giliran);
     if (letak != -1) {
         return letak;
     }

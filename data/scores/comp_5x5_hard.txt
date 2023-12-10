@@ -1,0 +1,3 @@
+11 Des 2023, 06:42:28#C:\Windows\system32\cmd.exe /c cls (s)#cmd.exe /c cls (c)#1546793837#0#11 Des 2023, 06:42:43
+11 Des 2023, 06:43:34#C:\Windows\X (X)#cmd.exe /c O (O)#1#0#11 Des 2023, 06:44:16
+11 Des 2023, 06:47:01#sa (X)#Computer (O)#2#0#11 Des 2023, 06:47:15

@@ -102,26 +102,43 @@ void MenuUtama() {
 }
 
 void MenuRiwayatSkor() {
-    ClearScreen();
+    int ukuran_papan, mode, level;
 
-    int jml_opsi, selection;
-    char menu[20];
+    ukuran_papan = 0;
+    while (ukuran_papan == 0) {
+        ukuran_papan = PilihUPSkor();
+        if (ukuran_papan == -1) break;
 
-    jml_opsi = 3;
-    strcpy(menu, "SKOR");
+        mode = 0;
+        while (mode == 0) {
+            mode = PilihModeSkor();
+            if (mode == -1) {
+                ukuran_papan = 0;
+                break;
+            }
 
-    char opsi[jml_opsi][20];
-    strcpy(opsi[0], "Riwayat Skor 3 x 3");
-    strcpy(opsi[1], "Riwayat Skor 5 x 5");
-    strcpy(opsi[2], "Riwayat Skor 7 x 7");
-
-    selection = MenuOpsi(menu, jml_opsi, opsi, true);
-
-    if (selection != -1) {
-        DisplaySkor((selection * 2) + 1);
-    } else {
-        MenuUtama();
+            level = 0;
+            while (level == 0) {
+                if (mode == 1) {
+                    level = PilihLevel();
+                    if (level == -1) {
+                        mode = 0;
+                        break;
+                    }
+                } else {
+                    level = 4;
+                }
+                DisplaySkor((ukuran_papan * 2) + 1, level);
+                if (mode == 1) {
+                    level = 0;
+                } else {
+                    mode = 0;
+                }
+            }
+        }
     }
+
+    MenuUtama();
 }
 
 void MenuBantuan() {
@@ -135,15 +152,19 @@ void MenuBantuan() {
     data = fopen("data/help.txt", "r");
     y = 1;
     gotoxy(1, y);
-    while ((ch = getc(data)) != EOF) {
-        putchar(ch);
+    if (data != NULL) {
+        while ((ch = getc(data)) != EOF) {
+            putchar(ch);
 
-        if (ch == '\n') {
-            y++;
-            gotoxy(1, y);
+            if (ch == '\n') {
+                y++;
+                gotoxy(1, y);
+            }
         }
+        fclose(data);
+    } else {
+        printf("Tidak ada file");
     }
-    fclose(data);
 
     gotoxy(1, y + 2);
     printf("Tekan ESC untuk kembali...");
@@ -176,23 +197,28 @@ void MenuKredit() {
     data = fopen("data/credits.txt", "r");
     x = 4;
     y = 12;
-    while (!feof(data)) {
-        ch = getc(data);
+    if (data != NULL) {
+        while (!feof(data)) {
+            ch = getc(data);
 
-        gotoxy(x, y);
-        putchar(ch);
-        x++;
+            gotoxy(x, y);
+            putchar(ch);
+            x++;
 
-        if ((ch == '\n') || (ch == EOF)) {
-            gotoxy(1, y);
-            printf("%c", 186);
-            gotoxy(lebar + 2, y);
-            printf("%c\n", 186);
-            x = 4;
-            y++;
+            if ((ch == '\n') || (ch == EOF)) {
+                gotoxy(1, y);
+                printf("%c", 186);
+                gotoxy(lebar + 2, y);
+                printf("%c\n", 186);
+                x = 4;
+                y++;
+            }
         }
+        fclose(data);
+    } else {
+        gotoxy(1, y++);
+        printf("%c %-92s %c", 186, "Tidak ada file", 186);
     }
-    fclose(data);
 
     gotoxy(1, y);
     printf("%c", 186);

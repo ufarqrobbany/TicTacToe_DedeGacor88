@@ -58,5 +58,5 @@ void GetDatetime(char (*datetime)[22]) {
     ConvertBulan(w_saat_ini->tm_mon, &bulan);
 
     // Use snprintf to avoid buffer overflow and format the string
-    snprintf((*datetime), 22, "%d %s %d, %d:%d:%d", w_saat_ini->tm_year + 1900, bulan, w_saat_ini->tm_mday, w_saat_ini->tm_hour, w_saat_ini->tm_min, w_saat_ini->tm_sec);
+    snprintf((*datetime), 22, "%02d %s %d, %02d:%02d:%02d", w_saat_ini->tm_mday, bulan, w_saat_ini->tm_year + 1900, w_saat_ini->tm_hour, w_saat_ini->tm_min, w_saat_ini->tm_sec);
 }

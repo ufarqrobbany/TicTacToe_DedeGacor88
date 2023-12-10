@@ -12,6 +12,7 @@
 #include "datetime.h"
 #include "header.h"
 #include "menu.h"
+#include "score.h"
 
 void Game() {
     DataGame play_data;
@@ -27,6 +28,8 @@ void Game() {
     // jika selesai bermain
     if (play == 2) {
         GetDatetime(&play_data.waktu_selesai);
+        SaveSkor(play_data.ukuran, play_data.level, play_data.waktu_mulai, play_data.pemain[0].nama, play_data.pemain[1].nama, play_data.pemain[0].simbol, play_data.pemain[1].simbol, play_data.pemain[0].skor, play_data.pemain[1].skor, play_data.waktu_selesai);
+        // SortSkor();
     }
 
     MenuUtama();
@@ -139,7 +142,7 @@ void PlayGame(DataGame *play_data, int *play) {
                 printf("Tunggu Computer meletakkan simbolnya...     ");
 
                 // bot komputer
-                bot_selection = Bot(ukuran, papan);
+                bot_selection = Bot(ukuran, papan, (*play_data).level, current_giliran);
                 PutSimbol(bot_selection, current_giliran, ukuran, &papan);
                 menang = CekPapan(ukuran, papan);
             }
@@ -327,9 +330,7 @@ void InitGame(DataGame *play_data, int *play) {
     (*play_data).mode = 0;
     while ((*play_data).mode == 0) {
         (*play_data).mode = PilihMode();
-        if ((*play_data).mode == -1) {
-            break;
-        }
+        if ((*play_data).mode == -1) break;
 
         nama = 0;
         while (nama == 0) {
@@ -549,7 +550,7 @@ int PilihUkuran() {
     selection = MenuOpsi(menu, jml_opsi, opsi, true);
 
     if (selection != 0) {
-        return selection;
+        return (selection * 2) + 1;
     } else {
         return -1;
     }

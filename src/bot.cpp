@@ -96,6 +96,35 @@ int CekPotentialWin(int ukuran, int papan[7][7], int giliran) {
         }
     }
 
+    // Tambahkan pengecekan untuk ukuran papan 5x5 dan 7x7
+    if (ukuran >= 5) {
+        // Cek baris dan kolom di tengah (hanya untuk papan 5x5 dan 7x7)
+        int tengah = ukuran / 2;
+        int countBarisTengah = 0, countKolomTengah = 0;
+        for (int i = 0; i < ukuran; ++i) {
+            if (papan[i][tengah] == giliran) {
+                countBarisTengah++;
+            }
+            if (papan[tengah][i] == giliran) {
+                countKolomTengah++;
+            }
+        }
+        if (countBarisTengah == ukuran - 1) {
+            for (int i = 0; i < ukuran; ++i) {
+                if (papan[i][tengah] == 0) {
+                    return i * ukuran + tengah + 1;
+                }
+            }
+        }
+        if (countKolomTengah == ukuran - 1) {
+            for (int i = 0; i < ukuran; ++i) {
+                if (papan[tengah][i] == 0) {
+                    return tengah * ukuran + i + 1;
+                }
+            }
+        }
+    }
+
     return -1;  // Tidak ada potensi kemenangan atau blokir
 }
 
@@ -103,8 +132,8 @@ int MediumBot(int ukuran, int papan[7][7], int giliran) {
     // Fungsi untuk bot tingkat medium
     int letak;
 
-    // Cek potensi kemenangan lawan dan blokir
-    letak = CekPotentialWin(ukuran, papan, 3 - giliran);
+    // Cek potensi kemenangan sendiri
+    letak = CekPotentialWin(ukuran, papan, giliran);
     if (letak != -1) {
         return letak;
     }
@@ -117,14 +146,14 @@ int HardBot(int ukuran, int papan[7][7], int giliran) {
     // Fungsi untuk bot tingkat hard
     int letak;
 
-    // Cek potensi kemenangan sendiri
-    letak = CekPotentialWin(ukuran, papan, giliran);
+    // Cek potensi kemenangan lawan dan blokir
+    letak = CekPotentialWin(ukuran, papan, 3 - giliran);
     if (letak != -1) {
         return letak;
     }
 
-    // Cek potensi kemenangan lawan dan blokir
-    letak = CekPotentialWin(ukuran, papan, 3 - giliran);
+    // Cek potensi kemenangan sendiri
+    letak = CekPotentialWin(ukuran, papan, giliran);
     if (letak != -1) {
         return letak;
     }

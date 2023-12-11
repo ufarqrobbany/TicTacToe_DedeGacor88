@@ -4,7 +4,7 @@ Nama Tim:
 Tim Pengembang:
     Jizdan Mulkan Nailan (231524011)
     Muhammad Aslim Salman (231524014)
-    Umar Faruq Robbany (231524028)
+    Umar Faruq Robbany (231524028) (Leader)
 
 Jurusan Teknik Komputer dan Informatika
 Program Studi D-IV Teknik Informatika

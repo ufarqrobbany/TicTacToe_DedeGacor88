@@ -1,0 +1,4 @@
+11 Des 2023, 09:15:20#sad (X)#Computer (O)#1#0#11 Des 2023, 09:15:39
+11 Des 2023, 06:50:42#Umar (X)#Computer (O)#1#0#11 Des 2023, 06:51:43
+11 Des 2023, 06:47:01#sa (X)#Computer (O)#2#0#11 Des 2023, 06:47:15
+11 Des 2023, 06:42:28#C:\Windows\system32\cmd.exe /c cls (s)#cmd.exe /c cls (c)#1546793837#0#11 Des 2023, 06:42:43

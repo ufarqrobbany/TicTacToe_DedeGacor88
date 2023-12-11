@@ -2,6 +2,7 @@
 
 #include <conio.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
 #include <windows.h>
@@ -29,7 +30,8 @@ void Game() {
     if (play == 2) {
         GetDatetime(&play_data.waktu_selesai);
         SaveSkor(play_data.ukuran, play_data.level, play_data.waktu_mulai, play_data.pemain[0].nama, play_data.pemain[1].nama, play_data.pemain[0].simbol, play_data.pemain[1].simbol, play_data.pemain[0].skor, play_data.pemain[1].skor, play_data.waktu_selesai);
-        // SortSkor();
+        ReverseSkor(play_data.ukuran, play_data.level);
+        GetHighScore(play_data.ukuran, play_data.level);
     }
 
     MenuUtama();
@@ -46,7 +48,7 @@ void PlayGame(DataGame *play_data, int *play) {
 
     char key;
 
-    int saat_ini, w_awal_giliran, sisa_waktu;
+    int saat_ini, w_awal_giliran, sisa_waktu, initial_time;
     struct tm *waktu;
     bool is_bot, kosong;
 
@@ -146,6 +148,7 @@ void PlayGame(DataGame *play_data, int *play) {
                 PutSimbol(bot_selection, current_giliran, ukuran, &papan);
                 menang = CekPapan(ukuran, papan);
             }
+
         } while (menang == 0);
 
         DisplayPapan(ukuran, papan, current_selection);
@@ -259,9 +262,9 @@ int EndGame(int mode, int pemain_menang, int pemain_kalah, Player pemain[2]) {
     gotoxy(4, 17);
     printf("Skor saat ini ");
     gotoxy(4, 18);
-    printf("    %s (%c) \t: %d", pemain[0].nama, pemain[0].simbol, pemain[0].skor);
+    printf("    %s (%c) : %d", pemain[0].nama, pemain[0].simbol, pemain[0].skor);
     gotoxy(4, 19);
-    printf("    %s (%c) \t: %d", pemain[1].nama, pemain[1].simbol, pemain[1].skor);
+    printf("    %s (%c) : %d", pemain[1].nama, pemain[1].simbol, pemain[1].skor);
 
     // print header
     gotoxy(1, 1);
@@ -278,6 +281,10 @@ int EndGame(int mode, int pemain_menang, int pemain_kalah, Player pemain[2]) {
     printf("%c", 200);
     for (i = 0; i < lebar; i++) printf("%c", 205);
     printf("%c\n", 188);
+
+    // print pesan
+    gotoxy(1, 25);
+    printf("Skor akan tersimpan jika berhenti bermain");
 
     // opsi
     do {

@@ -120,7 +120,7 @@ void MenuRiwayatSkor() {
             level = 0;
             while (level == 0) {
                 if (mode == 1) {
-                    level = PilihLevel();
+                    level = PilihLevelSkor();
                     if (level == -1) {
                         mode = 0;
                         break;

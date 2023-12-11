@@ -73,12 +73,6 @@ void PlayGame(DataGame *play_data, int *play) {
         w_awal_giliran = saat_ini;
 
         do {
-            // jeda pergantian pemain dari computer
-            if ((current_giliran == pemain[1].giliran) && (mode == 1) && (is_bot)) {
-                sleep(2);
-                current_selection = last_selection;
-            }
-
             ChangeGiliran(&current_giliran, &saat_ini, &w_awal_giliran);
             // print giliran
             PrintGiliran(current_giliran, pemain);
@@ -123,6 +117,7 @@ void PlayGame(DataGame *play_data, int *play) {
                     DisplayPapan(ukuran, papan, current_selection);
                 } while (!(key == 13 && kosong));
 
+                saat_ini = time(0);
                 if (GetSisaWaktu(saat_ini, w_awal_giliran) > 0) {
                     PutSimbol(current_selection, current_giliran, ukuran, &papan);
                     menang = CekPapan(ukuran, papan);
@@ -132,11 +127,13 @@ void PlayGame(DataGame *play_data, int *play) {
                     sleep(2);
                 }
 
-                if (mode == 1 && menang == 0) {
-                    last_selection = current_selection;
-                    current_selection = 0;
-                }
+                // if (mode == 1 && menang == 0) {
+                //     last_selection = current_selection;
+                //     current_selection = 0;
+                // }
             } else {
+                last_selection = current_selection;
+                current_selection = 0;
                 // jika bot
                 is_bot = true;
                 // print pesan
@@ -147,6 +144,12 @@ void PlayGame(DataGame *play_data, int *play) {
                 bot_selection = Bot(ukuran, papan, (*play_data).level, current_giliran);
                 PutSimbol(bot_selection, current_giliran, ukuran, &papan);
                 menang = CekPapan(ukuran, papan);
+
+                // jeda pergantian pemain dari computer
+                if ((current_giliran == pemain[1].giliran) && (mode == 1) && (is_bot)) {
+                    sleep(2);
+                    current_selection = last_selection;
+                }
             }
 
         } while (menang == 0);

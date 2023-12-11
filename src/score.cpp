@@ -10,7 +10,7 @@
 #include "common.h"
 #include "menu.h"
 
-void InsertionSort(ScoreData (*data)[1000], int jml) {
+void InsertionSortSkor(ScoreData (*data)[1000], int jml) {
     int i, j;
     ScoreData key, temp;
     for (i = 1; i < jml; i++) {
@@ -28,7 +28,7 @@ void InsertionSort(ScoreData (*data)[1000], int jml) {
 }
 
 // cari file
-void FileName(int ukuran, int level, char (*file)[50]) {
+void FileNameSkor(int ukuran, int level, char (*file)[50]) {
     if (ukuran == 3) {
         if (level == 1) strcpy(*file, "comp_3x3_easy.txt");
         if (level == 2) strcpy(*file, "comp_3x3_medi.txt");
@@ -52,7 +52,7 @@ void SaveSkor(int ukuran, int level, char waktu_mulai[22], char nama_p1[11], cha
     FILE *data;
     char file_s[50], file_sn[50];
 
-    FileName(ukuran, level, &file_sn);
+    FileNameSkor(ukuran, level, &file_sn);
     sprintf(file_s, "data/scores/%s", file_sn);
 
     data = fopen(file_s, "a");
@@ -66,8 +66,8 @@ void ReverseSkor(int ukuran, int level) {
     FILE *data, *reversed_data;
     char file_s[50], file_rs[50], file_sn[50], file_rsn[50];
 
-    FileName(ukuran, level, &file_sn);
-    FileName(ukuran, level, &file_rsn);
+    FileNameSkor(ukuran, level, &file_sn);
+    FileNameSkor(ukuran, level, &file_rsn);
     sprintf(file_s, "data/scores/%s", file_sn);
     sprintf(file_rs, "data/scores/reversed/%s", file_rsn);
 
@@ -109,8 +109,8 @@ void GetHighScore(int ukuran, int level) {
     FILE *data_s, *data_hs;
     char file_s[50], file_hs[50], file_sn[50], file_hsn[50];
 
-    FileName(ukuran, level, &file_sn);
-    FileName(ukuran, level, &file_hsn);
+    FileNameSkor(ukuran, level, &file_sn);
+    FileNameSkor(ukuran, level, &file_hsn);
     sprintf(file_s, "data/scores/%s", file_sn);
     sprintf(file_hs, "data/highscores/%s", file_hsn);
 
@@ -131,7 +131,7 @@ void GetHighScore(int ukuran, int level) {
             }
         }
 
-        InsertionSort(&scores, jml);
+        InsertionSortSkor(&scores, jml);
 
         for (i = 0; i < 3; i++) {
             fprintf(data_hs, "%s", scores[i].baris);
@@ -294,9 +294,9 @@ void DisplaySkor(int ukuran, int level) {
     int lebar = 94;
     char key, tabel[50], file_s[50], file_hs[50], file_sn[50], file_hsn[50];
 
-    FileName(ukuran, level, &file_sn);
-    FileName(ukuran, level, &file_hsn);
-    sprintf(file_s, "data/scores/%s", file_sn);
+    FileNameSkor(ukuran, level, &file_sn);
+    FileNameSkor(ukuran, level, &file_hsn);
+    sprintf(file_s, "data/scores/reversed/%s", file_sn);
     sprintf(file_hs, "data/highscores/%s", file_hsn);
 
     printf("SKOR %d x %d, %s%s", ukuran, ukuran, (level == 4) ? "VS PLAYER" : "VS COMPUTER", (level == 1) ? ", EASY" : ((level == 2) ? ", MEDIUM" : ((level == 3) ? ", HARD" : "")));

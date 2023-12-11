@@ -1,7 +1,3 @@
-11 Des 2023, 22:57:16#aslim (X)#Computer (O)#1#1#11 Des 2023, 22:58:18
 11 Des 2023, 22:52:03#jizdan (X)#Computer (O)#3#0#11 Des 2023, 22:53:35
-11 Des 2023, 22:45:44#jizdan (X)#Computer (O)#1#0#11 Des 2023, 22:46:00
-11 Des 2023, 22:45:17#faruq (O)#Computer (X)#1#0#11 Des 2023, 22:45:37
-11 Des 2023, 22:44:55#aslim (X)#Computer (O)#1#0#11 Des 2023, 22:45:09
-11 Des 2023, 19:51:46#a (X)#Computer (O)#1#0#11 Des 2023, 19:52:08
 11 Des 2023, 18:04:34#a (X)#Computer (O)#1#0#11 Des 2023, 18:04:59
+11 Des 2023, 19:51:46#a (X)#Computer (O)#1#0#11 Des 2023, 19:52:08

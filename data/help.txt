@@ -65,3 +65,4 @@ HoW To PlAy:
 7. Menu 'Kredit' menampilkan Developer dari game ini.
 
 8. Menu 'Keluar' digunakan untuk menghentikan seluruh program, apalagi kalo lose streak aowkawok.
+

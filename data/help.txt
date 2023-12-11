@@ -1,61 +1,67 @@
-How To Play:
-1. Anda dapat memilih tingkat kesulitan berdasarkan ukuran papan, 
-   tersedia 3x3, 5x5, 7x7.
-2. Anda diarahkan untuk memilih lawan bermain, 
-   ada pilihan Player vs Player, dan Player vs Computer.
+HoW To PlAy:
+1. Permainan ini dikontrol menggunakan kursor yang bisa digerakkan menggunakan tombol arah panah pada keyboard kamu.
+2. Kamu dapat memulai permainan dengan memilih menu 'Mulai Permainan'.
+3. Kamu diberikan pilihan untuk melawan 'Computer' atau bermain bersama teman dalam mode 'Player vs Player'.
+	
+	Jika kamu memilih 'Player vs Computer', kamu akan dimintai untuk mengisi nama,
+	kemudian memilih tingkat kesulitan yang terdiri dari :
+	
+	Easy, Medium, Hard.
 
-	Jika memilih Player vs Computer, 
-	anda harus mengisi nama dan memilih tingkat kesulitan, 
-	dan memilih ukuran papan.
+	Lalu, kamu diarahkan untuk memilih ukuran papan :
 
-	Jika memilih Player vs Player, 
-	kedua Player diharuskan memilih nama, 
-	dan ukuran papan sebagai tingkat kesulitan bermain.
+	3x3 : kamu harus menyusun 3 simbol dalam satu garis, bisa horizontal, vertikal, maupun diagonal.
+	5x5 : kamu harus menyusun 4 simbol dalam satu garis, bisa horizontal, vertikal, maupun diagonal.
+	7x7 : kamu harus menyusun 5 simbol dalam satu garis, bisa horizontal, vertikal, maupun diagonal.
 
-3. Setelah berhasil masuk kedalam permainan, 
-   anda dapat memilih kolom sel yang ditandai dengan nomer.
+	Setelahnya kamu akan diminta untuk memilih simbol sebagai representasi kamu dalam permainan :
 
-	Jika memilih ukuran papan 3x3, 
-	anda dapat memilih petak sesuai keinginan,
-	gunakan tombol panah pada keyboard anda
-	untuk membentuk pola simbol agar bisa meraih kemenangan.
+	X : kamu akan memulai giliran pertama kali.
+	O : kamu akan memulai giliran setelah giliran pemain pertama.
 
-	Jika memilih ukuran papan 5x5, 
-	anda dapat memilih petak sesuai keinginan,
-	gunakan tombol panah pada keyboard anda
-	untuk membentuk pola simbol agar bisa meraih kemenangan.
+	Jika kamu memilih 'Player vs Player', kamu akan hanya dimintai mengisi nama Player 1 dan Player 2.
+	kemudian kamu diarahkan untuk memilih ukuran papan :
 
-	Jika memilih ukuran papan 7x7, 
-	anda dapat memilih petak sesuai keinginan
-	gunakan tombol panah pada keyboard anda
-	untuk membentuk pola simbol agar bisa meraih kemenangan.
+	3x3 : kamu harus menyusun 3 simbol dalam satu garis, bisa horizontal, vertikal, maupun diagonal.
+	5x5 : kamu harus menyusun 4 simbol dalam satu garis, bisa horizontal, vertikal, maupun diagonal.
+	7x7 : kamu harus menyusun 5 simbol dalam satu garis, bisa horizontal, vertikal, maupun diagonal.
 
-4. Jika anda berhasil memenangkan permainan, anda dapat meraih poin.
+	Setelahnya kamu akan diminta untuk memilih simbol sebagai representasi kamu dalam permainan :
 
-	Jika memilih opsi Player vs Computer, anda meraih poin 1, 
-	dan dapat dilihat pada menu Riwayat Skor, 
-	dengan tampilan nama player dan total skor yang pernah diraih.
+	X : kamu akan memulai giliran pertama kali.
+	O : kamu akan memulai giliran setelah giliran pemain pertama.
 
-	Jika memilih opsi Player vs Player, player yang meraih kemenangan, 
-	namanya akan tercatat pada menu Riwayat skor, 
-	dengan tampilan nama player yang menang dan total skor yang pernah diraih.
+4. Jika kamu berhasil atau kalah dalam permainan, layar akan menampilkan skor sementara kamu sebelum kamu memilih opsi :
+	
+	Jika memilih 'Main Lagi!', maka kamu akan melanjutkan permainan tanpa menghapus riwayat permainan kamu sebelumnya
 
-		Jika player melanjutkan bermain pada opsi Player vs Player, 
-		riwayat skor pada permainan sebelumnya tidak terhapus, 
-		dan akan bertambah jika berhasil memenangkan permainan kembali.
+		Jika kamu berhasil meraih poin, dan permainan berikutnya berhasil menang lagi, 
+		kamu akan mendapatkan poin 2 berdasarkan kemenanganmu 2 kali berturut-turut.
 
-		Jika player memilih untuk keluar dari permainan, 
-		riwayat skor pada permainan sebelumnya, 
-		akan tersimpan ke dalam menu Riwayat Skor,
-		dan jika memilih permainan baru, kondisi skor kedua player akan 0.
+		Jika kamu berhasil meraih poin, namun kalah di permainan berikutnya, 
+		maka poin kamu di permainan sebelumnya tetap dan tidak berubah.
 
-5. Jika anda kalah dalam permainan, 
-   anda dapat mengulang kembali, 
-   atau keluar dari permainan.
+		Jika kamu kalah, dan di permainan berikutnya berhasil menang, 
+		kamu akan mendapatkan poin dan poin lawanmu tetap tidak berubah.
 
-6. Menu Riwayat Skor difungsikan sebagai rekaman jejak pemain, 
-   jika pernah berhasil mencetak poin.
+		Jika kamu kalah, dan di permainan berikutnya kalah lagi, berarti kamu bego.
 
-7. Menu Kredit akan menampilkan pengembang permainan.
+	Jika memilih 'Berhenti Main', kamu akan dikembalikan ke Menu Utama.
 
-8. Menu Keluar digunakan untuk menghentikan proses permainan.
+	Tulisan 'Skor akan tersimpan jika berhenti bermain' pada bagian bawah 
+	menandakan skor kamu akan tersimpan dan bisa dilihat pada menu 'Riwayat Skor'.
+
+5. Menu 'Riwayat Skor' dapat dibuka untuk melihat riwayat permainan kamu dengan rincian kategori :
+
+	3x3 or 5x5 or 7x7 > Player vs Computer > Easy or Medium or Hard.
+
+	3x3 or 5x5 or 7x7 > Player vs Player.
+
+	Setelah berhasil memilih kategori, 
+	layar akan menampilkan 30 riwayat permainan terakhir dengan Top 3 Skor Tertinggi.
+
+6. Menu 'Bantuan' ya ini euy, gimana sih >_<.
+
+7. Menu 'Kredit' menampilkan Developer dari game ini.
+
+8. Menu 'Keluar' digunakan untuk menghentikan seluruh program, apalagi kalo lose streak aowkawok.

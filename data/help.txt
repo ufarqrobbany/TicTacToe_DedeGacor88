@@ -31,6 +31,8 @@ HoW To PlAy:
 	X : kamu akan memulai giliran pertama kali.
 	O : kamu akan memulai giliran setelah giliran pemain pertama.
 
+4. Ketika permainan berlangsung, kamu diberi waktu setiap giliran selama 10 detik, jika tidak merespon dengan menginput
+
 4. Jika kamu berhasil atau kalah dalam permainan, layar akan menampilkan skor sementara kamu sebelum kamu memilih opsi :
 	
 	Jika memilih 'Main Lagi!', maka kamu akan melanjutkan permainan tanpa menghapus riwayat permainan kamu sebelumnya

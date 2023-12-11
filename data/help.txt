@@ -31,9 +31,12 @@ HoW To PlAy:
 	X : kamu akan memulai giliran pertama kali.
 	O : kamu akan memulai giliran setelah giliran pemain pertama.
 
-4. Ketika permainan berlangsung, kamu diberi waktu setiap giliran selama 10 detik, jika tidak merespon dengan menginput
+4. Ketika permainan berlangsung, kamu diberi waktu setiap giliran selama 10 detik, 
+   jika tidak merespon dan kamu kehabisan waktu ketika menginput Enter, maka giliran berpindah ke lawanmu.
 
-4. Jika kamu berhasil atau kalah dalam permainan, layar akan menampilkan skor sementara kamu sebelum kamu memilih opsi :
+5. Gunakan strategi terbaikmu untuk meraih kemenangan atau memblokir lawan agar tidak menang.
+
+6. Jika kamu berhasil atau kalah dalam permainan, layar akan menampilkan skor sementara kamu sebelum kamu memilih opsi :
 	
 	Jika memilih 'Main Lagi!', maka kamu akan melanjutkan permainan tanpa menghapus riwayat permainan kamu sebelumnya
 
@@ -53,7 +56,7 @@ HoW To PlAy:
 	Tulisan 'Skor akan tersimpan jika berhenti bermain' pada bagian bawah 
 	menandakan skor kamu akan tersimpan dan bisa dilihat pada menu 'Riwayat Skor'.
 
-5. Menu 'Riwayat Skor' dapat dibuka untuk melihat riwayat permainan kamu dengan rincian kategori :
+7. Menu 'Riwayat Skor' dapat dibuka untuk melihat riwayat permainan kamu dengan rincian kategori :
 
 	3x3 or 5x5 or 7x7 > Player vs Computer > Easy or Medium or Hard.
 
@@ -62,9 +65,9 @@ HoW To PlAy:
 	Setelah berhasil memilih kategori, 
 	layar akan menampilkan 30 riwayat permainan terakhir dengan Top 3 Skor Tertinggi.
 
-6. Menu 'Bantuan' ya ini euy, gimana sih >_<.
+8. Menu 'Bantuan' ya ini euy, gimana sih >_<.
 
-7. Menu 'Kredit' menampilkan Developer dari game ini.
+9. Menu 'Kredit' menampilkan Developer dari game ini.
 
-8. Menu 'Keluar' digunakan untuk menghentikan seluruh program, apalagi kalo lose streak aowkawok.
+10. Menu 'Keluar' digunakan untuk menghentikan seluruh program, apalagi kalo lose streak aowkawok.
 
